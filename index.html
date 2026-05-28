@@ -183,7 +183,6 @@
             return `${y}${m}${day}`;
         };
 
-        // [EXPONENTIAL COMPOUND TARGETS (20 YEARS @ 1.2 MULTIPLIER)]
         const compoundTargets = [
             { level: 1, target: 2561979, age: 39, year: 2024 },
             { level: 2, target: 3074375, age: 40, year: 2025 },
@@ -590,16 +589,19 @@
                 return { opDays: days, dailyVelocity: plAmt / days };
             }, [targetRecords]);
 
-            // [DYNAMIC COMPOUND LEVEL ENGINE]
             let currentTierIndex = tierConfigs.findIndex(t => totalAssets < t.target);
             if (currentTierIndex === -1) currentTierIndex = tierConfigs.length - 1; 
             const activeTier = tierConfigs[currentTierIndex];
             
             const progressPercent = activeTier.target > 0 ? Math.min((totalAssets / activeTier.target) * 100, 100).toFixed(2) : 0;
 
-            // [TIME SKIP CALCULATION]
             const currentYear = new Date().getFullYear();
             const yearsAhead = activeTier.year > currentYear ? activeTier.year - currentYear : 0;
+
+            const momDeltaIsPos = momDeltaAmt >= 0;
+            const velocityIsPos = dailyVelocity >= 0;
+            const growthIsPos = dynamicGrowthPct >= 0;
+            const cagrIsPos = cagr >= 0;
 
             useEffect(() => { 
                 if (!loading && totalAssets > 0) { 
@@ -680,12 +682,12 @@
                                         <span className="text-emerald-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">動能差值 MOMENTUM DELTA</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className="absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 border-emerald-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20">
-                                            <span className={`text-3xl md:text-4xl font-mono font-bold ${momDeltaAmt >= 0 ? 'text-emerald-400' : 'text-rose-400'} whitespace-nowrap mb-2`}>
-                                                {momDeltaAmt >= 0 ? '▲ +' : '▼ '}{Math.abs(momDeltaAmt).toLocaleString()}
+                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${momDeltaIsPos ? 'border-emerald-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
+                                            <span className={`text-3xl md:text-4xl font-mono font-bold ${momDeltaIsPos ? 'text-emerald-400' : 'text-rose-400'} whitespace-nowrap mb-2`}>
+                                                {momDeltaIsPos ? '▲ +' : '▼ '}{Math.abs(momDeltaAmt).toLocaleString()}
                                             </span>
-                                            <span className={`text-xl md:text-2xl font-mono font-bold ${momDeltaAmt >= 0 ? 'text-emerald-500/70' : 'text-rose-500/70'}`}>
-                                                ({momDeltaAmt >= 0 ? '+' : ''}{momDeltaPct.toFixed(2)}%)
+                                            <span className={`text-xl md:text-2xl font-mono font-bold ${momDeltaIsPos ? 'text-emerald-500/70' : 'text-rose-500/70'}`}>
+                                                ({momDeltaIsPos ? '+' : ''}{momDeltaPct.toFixed(2)}%)
                                             </span>
                                         </div>
                                         <div className="absolute inset-0 p-5 bg-black/95 border-t border-emerald-500/30 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
@@ -723,12 +725,12 @@
                                         <span className="text-cyan-400/80 text-xs md:text-sm font-mono tracking-widest font-bold">[{timeShiftYear}]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className="absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 border-amber-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20">
+                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${dynamicPlAmt >= 0 ? 'border-amber-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
                                             <span className={`text-3xl md:text-4xl font-mono font-bold leading-none mb-3 ${dynamicPlAmt >= 0 ? 'text-amber-400' : 'text-rose-400'} whitespace-nowrap`}>
                                                 {dynamicPlAmt >= 0 ? '▲ +' : '▼ '}{Math.abs(dynamicPlAmt).toLocaleString()}
                                             </span>
-                                            <span className={`text-2xl md:text-3xl font-mono font-bold ${dynamicGrowthPct >= 0 ? 'text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]' : 'text-rose-400'} whitespace-nowrap`}>
-                                                {dynamicGrowthPct >= 0 ? <span className="animate-rocket mr-1">🚀</span> : '⚠️ '}{dynamicGrowthPct >= 0 ? '+' : ''}{dynamicGrowthPct.toFixed(2)}%
+                                            <span className={`text-2xl md:text-3xl font-mono font-bold ${growthIsPos ? 'text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]' : 'text-rose-400'} whitespace-nowrap`}>
+                                                {growthIsPos ? <span className="animate-rocket mr-1">🚀</span> : '⚠️ '}{growthIsPos ? '+' : ''}{dynamicGrowthPct.toFixed(2)}%
                                             </span>
                                         </div>
                                         <div className="absolute inset-0 p-5 bg-black/95 border-t border-amber-500/30 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
@@ -744,12 +746,12 @@
                                         <span className="text-xs md:text-sm font-mono tracking-widest border px-2 py-0.5 rounded border-blue-500/30 text-blue-400 bg-blue-950/40">[{holdingYears.toFixed(2)} YRS]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${cagr >= 0 ? 'border-blue-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
-                                            <span className={`text-4xl md:text-5xl font-mono font-bold ${cagr >= 0 ? 'text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]' : 'text-rose-400'} whitespace-nowrap`}>
-                                                {cagr >= 0 ? <span className="animate-flame mr-1">🔥</span> : '❄️ '}{cagr >= 0 ? '+' : ''}{(isNaN(cagr) ? 0 : cagr).toFixed(2)}%
+                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${cagrIsPos ? 'border-blue-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
+                                            <span className={`text-4xl md:text-5xl font-mono font-bold ${cagrIsPos ? 'text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]' : 'text-rose-400'} whitespace-nowrap`}>
+                                                {cagrIsPos ? <span className="animate-flame mr-1">🔥</span> : '❄️ '}{cagrIsPos ? '+' : ''}{(isNaN(cagr) ? 0 : cagr).toFixed(2)}%
                                             </span>
                                         </div>
-                                        <div className={`absolute inset-0 p-5 bg-black/95 border-t ${cagr >= 0 ? 'border-blue-500/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
+                                        <div className={`absolute inset-0 p-5 bg-black/95 border-t ${cagrIsPos ? 'border-blue-500/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
                                             <span className="text-blue-400 text-lg font-bold tracking-widest mb-1">[COMPOUND_YIELD]</span>
                                             <span className="text-blue-200/80 text-sm md:text-base leading-tight">真實年化複利 (CAGR)。將期間總增幅依據實際在市天數進行年化權重換算。</span>
                                         </div>
@@ -779,16 +781,16 @@
                                         <span className="text-yellow-500/50 text-xs md:text-sm font-mono tracking-widest border border-yellow-500/30 px-2 py-1 rounded bg-yellow-950/40">[{opDays} OP_DAYS]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${dailyVelocity >= 0 ? 'border-yellow-400' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
-                                            <span className={`text-4xl md:text-5xl font-mono font-bold ${dailyVelocity >= 0 ? 'text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]' : 'text-rose-400'} whitespace-nowrap mb-1`}>
-                                                {dailyVelocity >= 0 ? <span className="animate-lightning mr-2">⚡</span> : <span className="animate-drop mr-2">🩸</span>}
-                                                {dailyVelocity >= 0 ? '+' : ''}{(isNaN(dailyVelocity) ? 0 : Math.round(dailyVelocity)).toLocaleString()}
+                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${velocityIsPos ? 'border-yellow-400' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
+                                            <span className={`text-4xl md:text-5xl font-mono font-bold ${velocityIsPos ? 'text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]' : 'text-rose-400'} whitespace-nowrap mb-1`}>
+                                                {velocityIsPos ? <span className="animate-lightning mr-2">⚡</span> : <span className="animate-drop mr-2">🩸</span>}
+                                                {velocityIsPos ? '+' : ''}{(isNaN(dailyVelocity) ? 0 : Math.round(dailyVelocity)).toLocaleString()}
                                             </span>
-                                            <span className={`text-xl font-mono font-bold ${dailyVelocity >= 0 ? 'text-yellow-500/70' : 'text-rose-500/70'}`}>TWD / DAY</span>
+                                            <span className={`text-xl font-mono font-bold ${velocityIsPos ? 'text-yellow-500/70' : 'text-rose-500/70'}`}>TWD / DAY</span>
                                         </div>
-                                        <div className={`absolute inset-0 p-5 bg-black/95 border-t ${dailyVelocity >= 0 ? 'border-yellow-500/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
-                                            <span className={`${dailyVelocity >= 0 ? 'text-yellow-400' : 'text-rose-400'} text-lg font-bold tracking-widest mb-1`">[DAILY_PRINT_RATE]</span>
-                                            <span className={`${dailyVelocity >= 0 ? 'text-yellow-200/80' : 'text-sm md:text-base leading-tight'}`}>資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
+                                        <div className={`absolute inset-0 p-5 bg-black/95 border-t ${velocityIsPos ? 'border-yellow-500/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
+                                            <span className={`${velocityIsPos ? 'text-yellow-400' : 'text-rose-400'} text-lg font-bold tracking-widest mb-1`}>[DAILY_PRINT_RATE]</span>
+                                            <span className={`${velocityIsPos ? 'text-yellow-200/80' : 'text-sm md:text-base leading-tight'}`}>資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
                                         </div>
                                     </div>
                                 </div>
