@@ -76,7 +76,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo, Fragment } = React;
 
-        // [CORE PROTOCOL] 替換此為你的 GAS Web App URL
+        // [CORE PROTOCOL] 已綁定你的專屬 API Gateway
         const API_GATEWAY = "https://script.google.com/macros/s/AKfycbxKxM7G3Veb0UPbwjvOs3ppGTogpDpi5ytPGVk9HZEDu19Qn-lXbca19dtwRSJxluEZWw/exec"; 
 
         // [COMMUNICATION ENGINE]
@@ -428,7 +428,6 @@
                 
                 const previousData = [...data];
                 const tempId = 'temp-' + Date.now();
-                // 樂觀更新引擎 (Optimistic UI) 0ms Render
                 setData(prev => [...prev, { _rowIndex: tempId, 日期: payload.date, 台股: payload.twStock, 美股: payload.usStock, 加密貨幣: payload.crypto, 總資產: payload.total, 備註: payload.note }].sort((a, b) => String(a.日期).localeCompare(String(b.日期))));
                 setFormData({ date: getTodayYMD(), twStock: '', usStockUsd: '', crypto: '', note: '' });
                 
@@ -452,7 +451,6 @@
             const handleDelete = (rowIndex) => {
                 if(window.confirm('確定要刪除這筆紀錄嗎？操作無法復原。')) {
                     const previousData = [...data];
-                    // 樂觀更新
                     setData(prev => prev.filter(item => item._rowIndex !== rowIndex));
                     
                     fetchMatrix('deleteEntry', { rowIndex })
@@ -472,7 +470,6 @@
             const saveEdit = (rowIndex) => {
                 const total = Math.round(Number(editFormData.twStock || 0) + Number(editFormData.usStock || 0) + Number(editFormData.crypto || 0));
                 const previousData = [...data];
-                // 樂觀更新
                 setData(prev => prev.map(item => item._rowIndex === rowIndex ? { ...item, 日期: editFormData.date, 台股: editFormData.twStock, 美股: editFormData.usStock, 加密貨幣: editFormData.crypto, 總資產: total, 備註: editFormData.note } : item).sort((a, b) => String(a.日期).localeCompare(String(b.日期))));
                 setEditingRow(null);
                 
@@ -488,7 +485,6 @@
 
             const handleMouseMove = (e) => { const { currentTarget, clientX, clientY } = e; const { left, top } = currentTarget.getBoundingClientRect(); currentTarget.style.setProperty('--mouse-x', `${clientX - left}px`); currentTarget.style.setProperty('--mouse-y', `${clientY - top}px`); };
 
-            // [CORE CALCULATION MATRIX]
             const latestForStats = data.length > 0 ? data[data.length - 1] : { 台股: 0, 美股: 0, 加密貨幣: 0, 總資產: 0, 日期: '' };
             const totalAssets = Number(latestForStats.總資產) || 0;
             
@@ -584,8 +580,6 @@
             const twVal = Number(latestForStats.台股) || 0;
             const usVal = Number(latestForStats.美股) || 0;
             const crVal = Number(latestForStats.加密貨幣) || 0;
-            const activeAssetValue = assetShiftType === 'TW' ? twVal : (assetShiftType === 'US' ? usVal : crVal);
-            const activeAssetDominance = totalAssets > 0 ? (activeAssetValue / totalAssets) * 100 : 0;
 
             return (
                 <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-12 animate-in relative pb-24">
@@ -620,10 +614,8 @@
                             </div>
                         </div>
                         
-                        {/* 6-CORE MATRIX & GLOBAL TIME SYNC */}
                         <div className="w-full xl:w-7/12 flex flex-col gap-4 relative z-10 pb-4">
                             
-                            {/* [GLOBAL TIME SYNC CONTROLLER] */}
                             <div className="flex justify-between items-end border-b border-cyan-500/30 pb-3 mb-2">
                                 <span className="text-xl md:text-2xl font-mono text-cyan-400 font-bold uppercase tracking-widest flex items-center gap-3">
                                     <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></div>
@@ -643,7 +635,6 @@
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* [1] MOMENTUM DELTA */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className="text-emerald-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">動能差值 MOMENTUM DELTA</span>
@@ -664,12 +655,9 @@
                                     </div>
                                 </div>
                                 
-                                {/* [2] ATH RADAR */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
-                                        <span className={`${isATH ? 'text-cyan-600/70' : 'text-rose-500/70'} text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0`}>
-                                            高點雷達 ATH RADAR
-                                        </span>
+                                        <span className={`${isATH ? 'text-cyan-600/70' : 'text-rose-500/70'} text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0`}>高點雷達 ATH RADAR</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${isATH ? 'border-cyan-400' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
@@ -677,9 +665,7 @@
                                                 {isATH ? `🚀 +${Math.max(0, athBreakoutAmount).toLocaleString()}` : `▼ -${athDeficitAmt.toLocaleString()}`}
                                             </span>
                                             {!isATH && (
-                                                <span className="text-xl md:text-2xl font-mono font-bold text-rose-500/70">
-                                                    (MDD: -{athDeficitPct.toFixed(2)}%)
-                                                </span>
+                                                <span className="text-xl md:text-2xl font-mono font-bold text-rose-500/70">(MDD: -{athDeficitPct.toFixed(2)}%)</span>
                                             )}
                                         </div>
                                         <div className={`absolute inset-0 p-5 bg-black/95 border-t ${isATH ? 'border-cyan-400/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
@@ -691,15 +677,10 @@
                                     </div>
                                 </div>
                                 
-                                {/* [3] PERFORMANCE MATRIX */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
-                                        <span className="text-amber-600/70 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">
-                                            損益收益 P&L / YIELD
-                                        </span>
-                                        <span className="text-cyan-400/80 text-xs md:text-sm font-mono tracking-widest font-bold">
-                                            [{timeShiftYear}]
-                                        </span>
+                                        <span className="text-amber-600/70 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">損益收益 P&L / YIELD</span>
+                                        <span className="text-cyan-400/80 text-xs md:text-sm font-mono tracking-widest font-bold">[{timeShiftYear}]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className="absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 border-amber-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20">
@@ -717,15 +698,10 @@
                                     </div>
                                 </div>
 
-                                {/* [4] CAGR ENGINE */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
-                                        <span className="text-blue-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">
-                                            年化複利 CAGR ENGINE
-                                        </span>
-                                        <span className="text-xs md:text-sm font-mono tracking-widest border px-2 py-0.5 rounded border-blue-500/30 text-blue-400 bg-blue-950/40">
-                                            [{holdingYears.toFixed(2)} YRS]
-                                        </span>
+                                        <span className="text-blue-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">年化複利 CAGR ENGINE</span>
+                                        <span className="text-xs md:text-sm font-mono tracking-widest border px-2 py-0.5 rounded border-blue-500/30 text-blue-400 bg-blue-950/40">[{holdingYears.toFixed(2)} YRS]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${cagr >= 0 ? 'border-blue-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
@@ -735,48 +711,32 @@
                                         </div>
                                         <div className={`absolute inset-0 p-5 bg-black/95 border-t ${cagr >= 0 ? 'border-blue-500/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
                                             <span className="text-blue-400 text-lg font-bold tracking-widest mb-1">[COMPOUND_YIELD]</span>
-                                            <span className="text-blue-200/80 text-sm md:text-base leading-tight">
-                                                真實年化複利 (CAGR)。將期間總增幅依據實際在市天數進行年化權重換算。即使未滿一年，也將動態顯示其「年化資金效率」。
-                                            </span>
+                                            <span className="text-blue-200/80 text-sm md:text-base leading-tight">真實年化複利 (CAGR)。將期間總增幅依據實際在市天數進行年化權重換算。</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* [5] EXTREMES */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
-                                        <span className="text-cyan-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">
-                                            時空極限 EXTREMES
-                                        </span>
-                                        <span className="text-cyan-400/80 text-xs md:text-sm font-mono tracking-widest font-bold">
-                                            [{timeShiftYear}]
-                                        </span>
+                                        <span className="text-cyan-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">時空極限 EXTREMES</span>
+                                        <span className="text-cyan-400/80 text-xs md:text-sm font-mono tracking-widest font-bold">[{timeShiftYear}]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className="absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 border-cyan-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20">
-                                            <span className="text-2xl md:text-3xl font-mono font-bold text-amber-400 leading-none drop-shadow-[0_0_8px_rgba(245,158,11,0.4)] whitespace-nowrap mb-2">
-                                                ▲ {extHigh.toLocaleString()}
-                                            </span>
-                                            <span className="text-2xl md:text-3xl font-mono font-bold text-amber-500 leading-none drop-shadow-[0_0_8px_rgba(245,158,11,0.35)] whitespace-nowrap">
-                                                ▼ {extLow.toLocaleString()}
-                                            </span>
+                                            <span className="text-2xl md:text-3xl font-mono font-bold text-amber-400 leading-none drop-shadow-[0_0_8px_rgba(245,158,11,0.4)] whitespace-nowrap mb-2">▲ {extHigh.toLocaleString()}</span>
+                                            <span className="text-2xl md:text-3xl font-mono font-bold text-amber-500 leading-none drop-shadow-[0_0_8px_rgba(245,158,11,0.35)] whitespace-nowrap">▼ {extLow.toLocaleString()}</span>
                                         </div>
                                         <div className="absolute inset-0 p-5 bg-black/95 border-t border-cyan-500/30 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
                                             <span className="text-cyan-400 text-lg font-bold tracking-widest mb-1">[TIME_SHIFT_LIMITS]</span>
-                                            <span className="text-cyan-200/80 text-sm md:text-base leading-tight">
-                                                動態時空極限。連動全局年份，檢索指定期間內的資產絕對高低水位。
-                                            </span>
+                                            <span className="text-cyan-200/80 text-sm md:text-base leading-tight">動態時空極限。連動全局年份，檢索指定期間內的資產絕對高低水位。</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* [6] CAPITAL VELOCITY */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className="text-yellow-500/80 text-sm md:text-base font-mono uppercase tracking-wider font-bold shrink-0">資本流速 VELOCITY</span>
-                                        <span className="text-yellow-500/50 text-xs md:text-sm font-mono tracking-widest border border-yellow-500/30 px-2 py-1 rounded bg-yellow-950/40">
-                                            [{opDays} OP_DAYS]
-                                        </span>
+                                        <span className="text-yellow-500/50 text-xs md:text-sm font-mono tracking-widest border border-yellow-500/30 px-2 py-1 rounded bg-yellow-950/40">[{opDays} OP_DAYS]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-4 ${dailyVelocity >= 0 ? 'border-yellow-400' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-black/20`}>
@@ -784,15 +744,11 @@
                                                 {dailyVelocity >= 0 ? <span className="animate-lightning mr-2">⚡</span> : <span className="animate-drop mr-2">🩸</span>}
                                                 {dailyVelocity >= 0 ? '+' : ''}{(isNaN(dailyVelocity) ? 0 : Math.round(dailyVelocity)).toLocaleString()}
                                             </span>
-                                            <span className={`text-xl font-mono font-bold ${dailyVelocity >= 0 ? 'text-yellow-500/70' : 'text-rose-500/70'}`}>
-                                                TWD / DAY
-                                            </span>
+                                            <span className={`text-xl font-mono font-bold ${dailyVelocity >= 0 ? 'text-yellow-500/70' : 'text-rose-500/70'}`}>TWD / DAY</span>
                                         </div>
                                         <div className={`absolute inset-0 p-5 bg-black/95 border-t ${dailyVelocity >= 0 ? 'border-yellow-500/30' : 'border-rose-500/30'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
-                                            <span className={`${dailyVelocity >= 0 ? 'text-yellow-400' : 'text-rose-400'} text-lg font-bold tracking-widest mb-1`">[DAILY_PRINT_RATE]</span>
-                                            <span className={`${dailyVelocity >= 0 ? 'text-yellow-200/80' : 'text-sm md:text-base leading-tight'}`}>
-                                                資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。
-                                            </span>
+                                            <span className={`${dailyVelocity >= 0 ? 'text-yellow-400' : 'text-rose-400'} text-lg font-bold tracking-widest mb-1`}>[DAILY_PRINT_RATE]</span>
+                                            <span className={`${dailyVelocity >= 0 ? 'text-yellow-200/80' : 'text-sm md:text-base leading-tight'}`}>資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
                                         </div>
                                     </div>
                                 </div>
@@ -830,7 +786,6 @@
                                             </div>
                                             <input required type="number" step="any" name="crypto" value={formData.crypto} onChange={handleInputChange} className="w-full px-5 py-4 text-2xl rounded bg-black/40 border border-amber-700/50 font-mono font-bold text-amber-500 shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] focus:border-amber-500 focus:bg-black/80 focus:shadow-[0_0_15px_rgba(245,158,11,0.2)] transition-all outline-none" />
                                         </div>
-
                                     </div>
                                 </div>
 
