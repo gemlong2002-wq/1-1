@@ -185,21 +185,36 @@
 
         // [EXPONENTIAL COMPOUND TARGETS (20 YEARS @ 1.2 MULTIPLIER)]
         const compoundTargets = [
-            2561979, 3074375, 3689250, 4427100, 5312519, 
-            6375023, 7650028, 9180034, 11016040, 13219248, 
-            15863098, 19035718, 22842861, 27411433, 32893720, 
-            39472464, 47366957, 56840348, 68208418, 81850101
+            { level: 1, target: 2561979, age: 39, year: 2024 },
+            { level: 2, target: 3074375, age: 40, year: 2025 },
+            { level: 3, target: 3689250, age: 41, year: 2026 },
+            { level: 4, target: 4427100, age: 42, year: 2027 },
+            { level: 5, target: 5312519, age: 43, year: 2028 },
+            { level: 6, target: 6375023, age: 44, year: 2029 },
+            { level: 7, target: 7650028, age: 45, year: 2030 },
+            { level: 8, target: 9180034, age: 46, year: 2031 },
+            { level: 9, target: 11016040, age: 47, year: 2032 },
+            { level: 10, target: 13219248, age: 48, year: 2033 },
+            { level: 11, target: 15863098, age: 49, year: 2034 },
+            { level: 12, target: 19035718, age: 50, year: 2035 },
+            { level: 13, target: 22842861, age: 51, year: 2036 },
+            { level: 14, target: 27411433, age: 52, year: 2037 },
+            { level: 15, target: 32893720, age: 53, year: 2038 },
+            { level: 16, target: 39472464, age: 54, year: 2039 },
+            { level: 17, target: 47366957, age: 55, year: 2040 },
+            { level: 18, target: 56840348, age: 56, year: 2041 },
+            { level: 19, target: 68208418, age: 57, year: 2042 },
+            { level: 20, target: 81850101, age: 58, year: 2043 }
         ];
 
-        const tierConfigs = compoundTargets.map((target, index) => {
+        const tierConfigs = compoundTargets.map((data, index) => {
             let colors = "from-amber-600 via-yellow-500 to-emerald-400";
             if (index >= 5) colors = "from-cyan-600 via-blue-500 to-purple-400";
             if (index >= 10) colors = "from-rose-600 via-pink-500 to-purple-400";
             if (index >= 15) colors = "from-emerald-600 via-lime-400 to-cyan-400";
             return {
-                level: index + 1,
-                target: target,
-                name: `PROJECT_COMPOUND_LV ${index + 1}`,
+                ...data,
+                name: `PROJECT_LVL_${data.level}`,
                 colors: colors
             };
         });
@@ -253,8 +268,8 @@
                     let year = item.日期 instanceof Date ? String(item.日期.getFullYear()) : String(item.日期).substring(0, 4);
                     if (year < '2024') {
                         const total = Number(item.總資產) || 0;
-                        let lvl = compoundTargets.findIndex(t => total < t);
-                        currentTier = lvl === -1 ? 20 : lvl + 1; // 1-based level
+                        let lvl = compoundTargets.findIndex(t => total < t.target);
+                        currentTier = lvl === -1 ? 20 : lvl + 1;
                     } else break;
                 }
                 return data.map((item, index) => {
@@ -262,8 +277,7 @@
                     let year = item.日期 instanceof Date ? String(item.日期.getFullYear()) : String(item.日期).substring(0, 4);
                     const total = Number(newItem.總資產) || 0;
                     
-                    // 動態偵測當前等級
-                    let lvlIdx = compoundTargets.findIndex(t => total < t);
+                    let lvlIdx = compoundTargets.findIndex(t => total < t.target);
                     let tier = lvlIdx === -1 ? 20 : lvlIdx + 1; 
 
                     if (year >= '2024') {
@@ -576,12 +590,16 @@
                 return { opDays: days, dailyVelocity: plAmt / days };
             }, [targetRecords]);
 
-            // [NEW: DYNAMIC COMPOUND LEVEL ENGINE]
+            // [DYNAMIC COMPOUND LEVEL ENGINE]
             let currentTierIndex = tierConfigs.findIndex(t => totalAssets < t.target);
             if (currentTierIndex === -1) currentTierIndex = tierConfigs.length - 1; 
             const activeTier = tierConfigs[currentTierIndex];
             
             const progressPercent = activeTier.target > 0 ? Math.min((totalAssets / activeTier.target) * 100, 100).toFixed(2) : 0;
+
+            // [TIME SKIP CALCULATION]
+            const currentYear = new Date().getFullYear();
+            const yearsAhead = activeTier.year > currentYear ? activeTier.year - currentYear : 0;
 
             useEffect(() => { 
                 if (!loading && totalAssets > 0) { 
@@ -611,10 +629,17 @@
                             </div>
                             
                             <div className="w-full glass-card p-6 rounded-xl border border-amber-500/40 relative overflow-hidden transition-all duration-700">
-                                {currentTierIndex > 0 && <div className="absolute top-0 right-0 px-4 py-1 bg-black/60 border-b border-l border-amber-500/40 rounded-bl-lg text-xs font-mono font-bold text-amber-400 animate-pulse z-20">OVERDRIVE: LEVEL {activeTier.level}</div>}
+                                <div className="absolute top-0 right-0 px-4 py-1 bg-black/60 border-b border-l border-amber-500/40 rounded-bl-lg text-xs font-mono font-bold text-amber-400 animate-pulse z-20">OVERDRIVE: LEVEL {activeTier.level}</div>
                                 
-                                <div className="flex justify-between items-end mb-4 relative z-10">
-                                    <span className="text-xl font-mono text-amber-400 font-bold uppercase tracking-widest relative z-10 transition-colors duration-700">{activeTier.name}</span>
+                                <div className="flex flex-wrap justify-between items-end mb-4 relative z-10 gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xl font-mono text-amber-400 font-bold uppercase tracking-widest relative z-10 transition-colors duration-700">{activeTier.name}</span>
+                                        {yearsAhead > 0 && (
+                                            <span className="text-xs md:text-sm font-mono tracking-widest font-bold border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
+                                                🚀 TIME SKIP: +{yearsAhead} YRS
+                                            </span>
+                                        )}
+                                    </div>
                                     <span className="text-4xl font-mono font-bold glass-text-premium">{progressPercent}%</span>
                                 </div>
                                 <div className="h-8 w-full bg-black/60 rounded-full overflow-hidden border border-white/5 relative z-10 neon-bar">
@@ -622,9 +647,9 @@
                                         <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
                                     </div>
                                 </div>
-                                <div className="mt-4 flex justify-between text-xl font-mono text-amber-500 relative z-10 font-bold opacity-80">
-                                    <span>STATUS: {progressPercent >= 100 ? 'COMPLETED' : 'ASCENDING'}</span>
-                                    <span>TARGET: {(activeTier.target).toLocaleString()} TWD</span>
+                                <div className="mt-4 flex flex-col sm:flex-row justify-between text-lg md:text-xl font-mono relative z-10 font-bold opacity-80 gap-2">
+                                    <span className="text-amber-500">TARGET: {(activeTier.target).toLocaleString()} TWD</span>
+                                    <span className="text-cyan-400 text-right">ETA: {activeTier.year} [AGE {activeTier.age}]</span>
                                 </div>
                             </div>
                         </div>
