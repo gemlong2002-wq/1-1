@@ -45,11 +45,9 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         
-        /* Premium Text for Light Theme */
         .glass-text-premium { background: linear-gradient(180deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 4px 6px rgba(15, 23, 42, 0.1)); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; }
-        .glass-text-premium:hover { filter: drop-shadow(0 15px 20px rgba(14, 165, 233, 0.4)) drop-shadow(0 0 10px rgba(14,165,233,0.2)); transform: scale(1.08) translateY(-4px); background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-text-premium:hover { filter: drop-shadow(0 15px 20px rgba(14, 165, 233, 0.4)) drop-shadow(0 0 10px rgba(14,165,233,0.2)); transform: scale(1.05) translateY(-4px); background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Light Theme Odometer */
         .odometer-digit-container { display: inline-block; position: relative; width: 36px; height: 54px; flex-shrink: 0; background: #ffffff; border: 2px solid rgba(15, 23, 42, 0.1); border-radius: 8px; margin: 0 4px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.3s; }
         .odometer-digit-container:hover { border-color: rgba(14, 165, 233, 0.5); box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); transform: translateY(-2px); }
         .odometer-track { position: absolute; top: 0; left: 0; width: 100%; will-change: transform; }
@@ -61,18 +59,15 @@
         .btn-glitch { position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .btn-glitch:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 25px -5px rgba(15, 23, 42, 0.4); }
         
-        /* Light Theme Border Beam */
         .border-beam-container { position: relative; border-radius: 0.75rem; overflow: hidden; background: #e2e8f0; transition: all 0.3s; }
         .border-beam-container:hover { box-shadow: 0 10px 30px rgba(14, 165, 233, 0.15); transform: translateY(-2px); }
         .border-beam-container::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 65%, #cbd5e1 75%, #94a3b8 100%); animation: rotate 4s linear infinite; opacity: 0.8; }
         .border-beam-content { position: relative; margin: 2px; border-radius: calc(0.75rem - 2px); background: #ffffff; height: calc(100% - 4px); }
         @keyframes rotate { 100% { transform: rotate(360deg); } }
         
-        /* Light Theme Tags */
         .cyber-tag-up { color: #059669; border: 2px solid rgba(5, 150, 105, 0.2); background: rgba(5, 150, 105, 0.05); }
         .cyber-tag-down { color: #e11d48; border: 2px solid rgba(225, 29, 72, 0.2); background: rgba(225, 29, 72, 0.05); }
         
-        /* Light Theme Inputs */
         input { background: #ffffff; border: 2px solid #e2e8f0; color: #0f172a; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: 700; }
         input:focus { outline: none; border-color: #0ea5e9; background: #ffffff; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.15); transform: translateY(-2px); }
         
@@ -86,7 +81,6 @@
         ::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.2); border-radius: 5px; transition: all 0.3s; } 
         ::-webkit-scrollbar-thumb:hover { background: rgba(14, 165, 233, 0.6); }
 
-        /* Animations */
         @keyframes rocketLaunch { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 4px rgba(14,165,233,0.3)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 0 8px rgba(14,165,233,0.5)); } }
         .animate-rocket { animation: rocketLaunch 1.5s infinite; display: inline-block; }
         @keyframes lightningPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(202,138,4,0.3)); transform: scale(1); } 50% { filter: drop-shadow(0 0 8px rgba(202,138,4,0.6)); transform: scale(1.1); } }
@@ -96,13 +90,17 @@
         @keyframes flameFlicker { 0% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(234,88,12,0.3)); } 50% { transform: scale(1.05) rotate(1deg); filter: drop-shadow(0 0 8px rgba(234,88,12,0.5)); } 100% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(234,88,12,0.3)); } }
         .animate-flame { animation: flameFlicker 1.5s infinite; display: inline-block; transform-origin: center bottom; }
         
-        /* Brutalist Signature */
         .brutalist-stamp { border: 4px solid #0f172a; color: #0f172a; background: #ffffff; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 6px 6px 0px #0f172a; }
         .brutalist-stamp:hover { transform: translate(-4px, -4px) scale(1.05); box-shadow: 12px 12px 0px rgba(14, 165, 233, 0.8); background: #f8fafc; border-color: #0ea5e9; color: #0ea5e9; }
 
-        /* Table Row Hover */
         .table-row-vibe { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .table-row-vibe:hover { transform: scale(1.01) translateX(10px); background-color: #f1f5f9; box-shadow: -5px 5px 15px rgba(15, 23, 42, 0.05); border-left: 4px solid #0ea5e9; }
+
+        /* Custom Scrollbar for Modal */
+        .modal-scroll::-webkit-scrollbar { width: 8px; }
+        .modal-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
 <body>
@@ -121,7 +119,7 @@
                 body: JSON.stringify({ action, payload }),
                 redirect: "follow"
             });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            if (!response.ok) throw new Error("HTTP " + response.status);
             return await response.json();
         };
 
@@ -173,7 +171,7 @@
                 <div className="odometer-digit-container">
                     <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white z-10 pointer-events-none opacity-80"></div>
                     <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-slate-200 -translate-y-1/2 z-20 pointer-events-none shadow-[0_1px_0_rgba(255,255,255,0.8)]"></div>
-                    <div className="odometer-track" style={{ transform: `translateY(-${displayTarget * 54}px)`, transition: transitionStyle }}>
+                    <div className="odometer-track" style={{ transform: "translateY(-" + (displayTarget * 54) + "px)", transition: transitionStyle }}>
                         {[0,1,2,3,4,5,6,7,8,9].map(n => ( <div key={n} className="odometer-num">{n}</div> ))}
                     </div>
                 </div>
@@ -183,7 +181,7 @@
         const AirportNumberBoard = ({ value }) => {
             return (
                 <span className="font-bold flex items-center justify-center font-mono relative z-10 h-[54px] vibe-hover-text">
-                    {value.split('').map((char, index) => (<OdometerDigit key={`${index}-${char}`} digit={char} />))}
+                    {value.split('').map((char, index) => (<OdometerDigit key={index + "-" + char} digit={char} />))}
                     <span className="text-3xl font-bold text-slate-500 ml-2 mt-[6px]">%</span>
                 </span>
             );
@@ -204,10 +202,10 @@
                 const y = val.getFullYear();
                 const m = String(val.getMonth() + 1).padStart(2, '0');
                 const d = String(val.getDate()).padStart(2, '0');
-                return `${y}/${m}/${d}`;
+                return y + "/" + m + "/" + d;
             }
             const s = String(val).trim();
-            if (/^\d{8}$/.test(s)) return `${s.slice(0,4)}/${s.slice(4,6)}/${s.slice(6,8)}`;
+            if (/^\d{8}$/.test(s)) return s.slice(0,4) + "/" + s.slice(4,6) + "/" + s.slice(6,8);
             return s; 
         };
 
@@ -216,7 +214,7 @@
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
-            return `${y}${m}${day}`;
+            return y + m + day;
         };
 
         const compoundTargets = [
@@ -266,6 +264,7 @@
             const [editFormData, setEditFormData] = useState({});
             const [barProgress, setBarProgress] = useState(0);
             const [hoveredAsset, setHoveredAsset] = useState(null);
+            const [showDestinyModal, setShowDestinyModal] = useState(false);
 
             const [timeShiftYear, setTimeShiftYear] = useState('ALL_TIME');
             
@@ -656,6 +655,7 @@
             const velocityIsPos = dailyVelocity >= 0;
             const growthIsPos = dynamicGrowthPct >= 0;
             const cagrIsPos = cagr >= 0;
+            const isFIRE = totalAssets >= 30000000;
 
             useEffect(() => { 
                 if (!loading && totalAssets > 0) { 
@@ -672,20 +672,59 @@
 
             return (
                 <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-12 animate-in relative pb-24">
+                    
+                    {/* [FIRE MODE CELEBRATION] */}
+                    {isFIRE && (
+                        <div className="w-full bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 p-1 rounded-2xl mb-8 shadow-2xl animate-pulse">
+                            <div className="bg-white/90 backdrop-blur rounded-xl p-4 text-center">
+                                <span className="text-3xl md:text-4xl font-black font-mono bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-purple-600 tracking-[0.2em]">
+                                    🎉 FINANCIAL FREEDOM ACHIEVED 🎉
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* [DESTINY MATRIX MODAL] */}
+                    {showDestinyModal && (
+                        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-[100]" onClick={() => setShowDestinyModal(false)}>
+                            <div className="bg-white p-8 rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-slate-200 modal-scroll" onClick={e => e.stopPropagation()}>
+                                <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4 sticky top-0 bg-white z-10">
+                                    <h2 className="text-2xl font-black font-mono text-slate-800">DESTINY MATRIX</h2>
+                                    <button onClick={() => setShowDestinyModal(false)} className="text-slate-400 hover:text-slate-600 font-bold text-3xl outline-none">&times;</button>
+                                </div>
+                                <div className="space-y-2">
+                                    {compoundTargets.map((t, i) => {
+                                        const isCurrent = activeTier.level === t.level;
+                                        const isPassed = totalAssets >= t.target;
+                                        return (
+                                            <div key={i} className={"p-4 flex justify-between items-center rounded-lg border transition-all " + (isCurrent ? "bg-cyan-50 border-cyan-300 shadow-md scale-[1.02] my-4" : (isPassed ? "bg-slate-50 border-slate-200 opacity-50" : "bg-white border-slate-100"))}>
+                                                <div className="flex flex-col">
+                                                    <span className={"font-mono font-bold " + (isCurrent ? "text-cyan-700 text-lg" : "text-slate-600")}>LVL {t.level} {isCurrent && <span className="animate-pulse ml-2">👈 CURRENT</span>}</span>
+                                                    <span className={"font-mono text-xs " + (isCurrent ? "text-cyan-600" : "text-slate-400")}>{t.year} (AGE {t.age})</span>
+                                                </div>
+                                                <span className={"font-mono font-black " + (isCurrent ? "text-cyan-700 text-xl" : "text-slate-700")}>{t.target.toLocaleString()} TWD</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="flex flex-col xl:flex-row justify-between items-start gap-12">
-                        
                         <div className="w-full xl:w-5/12">
                             <h1 className="text-3xl font-bold tracking-widest text-slate-800 font-mono mb-4 vibe-hover-text"><ScrambleText text="AMBER_ TERMINAL_V9.6 [MATRIX_CORE]" /></h1>
                             
-                            <div className="relative z-10 flex flex-wrap items-baseline gap-4 mb-8">
-                                <span className="text-7xl md:text-8xl font-bold tracking-tight glass-text-premium block">
+                            {/* CLICKABLE TOTAL ASSET */}
+                            <div className="relative z-10 flex flex-wrap items-baseline gap-4 mb-8 cursor-pointer hover:scale-105 transition-transform group" onClick={() => setShowDestinyModal(true)} title="Click to view Destiny Matrix">
+                                <span className="text-7xl md:text-8xl font-bold tracking-tight glass-text-premium block group-hover:text-cyan-600 transition-colors">
                                     <ScrambleText text={totalAssets.toLocaleString()} />
                                 </span>
                                 <span className="text-4xl font-extrabold text-slate-400 font-mono tracking-wider opacity-80 mt-2 vibe-hover-text">TWD</span>
                             </div>
                             
                             <div className="w-full glass-card p-6 rounded-xl border-t-[6px] border-slate-800 relative overflow-hidden transition-all duration-700 shadow-xl">
-                                <div className="absolute top-0 right-0 px-4 py-1 bg-slate-800 border-b border-l border-slate-700 rounded-bl-lg text-xs font-mono font-bold text-white animate-pulse z-20">OVERDRIVE: LEVEL {activeTier.level}</div>
+                                <div className="absolute top-0 right-0 px-4 py-1 bg-slate-800 border-b border-l border-slate-700 rounded-bl-lg text-xs font-mono font-bold text-white animate-pulse z-20 shadow-md">OVERDRIVE: LEVEL {activeTier.level}</div>
                                 
                                 <div className="flex flex-wrap justify-between items-end mb-4 relative z-10 gap-2 mt-4">
                                     <div className="flex items-center gap-3">
@@ -699,7 +738,7 @@
                                     <span className="text-4xl font-mono font-bold text-slate-800 vibe-hover-text">{progressPercent}%</span>
                                 </div>
                                 <div className="h-8 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200 relative z-10 shadow-inner">
-                                    <div className={"h-full relative transition-all duration-1000 shadow-md " + activeTier.colors} style={{ width: progressPercent + "%", transition: 'width 2.5s cubic-bezier(0.22, 1, 0.36, 1), background 1s ease' }}>
+                                    <div className={"h-full bg-gradient-to-r relative transition-all duration-1000 shadow-md " + activeTier.colors} style={{ width: barProgress + "%" }}>
                                         <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
                                     </div>
                                 </div>
@@ -815,7 +854,6 @@
                                     </div>
                                 </div>
 
-                                {/* [OPTIMIZED: EXTREMES WINDOWED HIGHEST & LOWEST & FINAL WITH TIMESTAMPS] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className="text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text">時空極限 EXTREMES</span>
@@ -907,7 +945,7 @@
                         </div>
                         
                         <div className="glass-card p-8 rounded-2xl lg:col-span-2 flex flex-col stagger-2 shadow-lg border border-slate-200">
-                            <div className="flex justify-between items-center mb-8 relative z-10"><h3 className="text-2xl font-mono text-slate-800 uppercase tracking-widest font-extrabold vibe-hover-text">軌跡 Trajectory</h3><select value={chartFilter} onChange={(e) => setChartFilter(e.target.value)} className="bg-white border-2 border-slate-200 text-slate-700 text-lg font-mono rounded-lg px-4 py-2 outline-none relative z-10 font-bold focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all"><option value="last20">Last 20</option><option value="all">All Time</option>{sortedYears.map(y => <option key={"chart-opt-" + y} value={y}>{y}</option>)}</select></div>
+                            <div className="flex justify-between items-center mb-8 relative z-10"><h3 className="text-2xl font-mono text-slate-800 uppercase tracking-widest font-extrabold vibe-hover-text">軌跡 Trajectory</h3><select value={chartFilter} onChange={(e) => setChartFilter(e.target.value)} className="bg-white border-2 border-slate-200 text-slate-700 text-lg font-mono rounded-lg px-4 py-2 outline-none relative z-10 font-bold focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all"><option value="last20">Last 20</option><option value="all">All Time</option>{sortedYears.map(y => <option key={"chart-" + y} value={y}>{y}</option>)}</select></div>
                             <div className="flex-grow min-h-[400px] relative z-0"><canvas ref={lineChartRef}></canvas></div>
                             <div className="mt-10 pt-10 border-t border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-8 items-center relative z-10">
                                 
@@ -999,7 +1037,7 @@
                                                                     {isEditing ? (
                                                                         <React.Fragment><td className="p-4"><input name="date" value={editFormData.date} onChange={handleEditChange} className="w-40 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="twStock" value={editFormData.twStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="usStock" value={editFormData.usStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="crypto" value={editFormData.crypto} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 space-x-4"><button onClick={() => saveEdit(item._rowIndex)} className="text-xl px-4 py-2 bg-slate-800 text-white rounded font-mono font-bold hover:bg-slate-700 transition-colors shadow">SAVE</button><button onClick={() => setEditingRow(null)} className="text-xl px-4 py-2 border-2 border-slate-300 text-slate-600 rounded font-mono font-bold hover:bg-slate-100 transition-colors">CANCEL</button></td></React.Fragment>
                                                                     ) : (
-                                                                        <React.Fragment><td className="p-6 text-2xl font-mono text-slate-800 font-bold">{formatYMD(item.日期)}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.台股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.美股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.加密貨幣).toLocaleString()}</td><td className="p-6 text-2xl font-extrabold font-mono">{isBase ? <span className="text-slate-400">BASE</span> : <span className={ytdGrowth >= 0 ? 'text-emerald-600' : 'text-rose-600'}>{ytdGrowth >= 0 ? '▲ +' : '▼ '}{ytdGrowth.toFixed(2)}%</span>}</td><td className="p-6 text-3xl font-extrabold font-mono relative"><div className="flex items-center gap-5"><span className="text-slate-800">{Number(item.總資產).toLocaleString()}</span>{item.milestone === 'up' && <span className="text-lg px-3 py-1 rounded cyber-tag-up font-bold animate-pulse">▲ LVL {item.tier} UNLOCKED</span>}{item.milestone === 'down' && <span className="text-lg px-3 py-1 rounded cyber-tag-down font-bold animate-pulse">▼ LVL {item.prevTier} LOST</span>}</div></td><td className="p-6 space-x-6 relative z-10"><button onClick={() => startEdit(item)} className="text-xl text-cyan-600 font-mono font-extrabold hover:text-cyan-800 transition-colors hover:scale-110 inline-block">EDIT</button><button onClick={() => handleDelete(item._rowIndex)} className="text-xl text-rose-500 font-mono font-extrabold hover:text-rose-700 transition-colors hover:scale-110 inline-block">DEL</button></td></React.Fragment>
+                                                                        <React.Fragment><td className="p-6 text-2xl font-mono text-slate-800 font-bold">{formatYMD(item.日期)}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.台股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.美股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.加密貨幣).toLocaleString()}</td><td className="p-6 text-2xl font-extrabold font-mono">{isBase ? <span className="text-slate-400">BASE</span> : <span className={ytdGrowth >= 0 ? "text-emerald-600" : "text-rose-600"}>{ytdGrowth >= 0 ? '▲ +' : '▼ '}{ytdGrowth.toFixed(2)}%</span>}</td><td className="p-6 text-3xl font-extrabold font-mono relative"><div className="flex items-center gap-5"><span className="text-slate-800">{Number(item.總資產).toLocaleString()}</span>{item.milestone === 'up' && <span className="text-lg px-3 py-1 rounded cyber-tag-up font-bold animate-pulse">▲ LVL {item.tier} UNLOCKED</span>}{item.milestone === 'down' && <span className="text-lg px-3 py-1 rounded cyber-tag-down font-bold animate-pulse">▼ LVL {item.prevTier} LOST</span>}</div></td><td className="p-6 space-x-6 relative z-10"><button onClick={() => startEdit(item)} className="text-xl text-cyan-600 font-mono font-extrabold hover:text-cyan-800 transition-colors hover:scale-110 inline-block">EDIT</button><button onClick={() => handleDelete(item._rowIndex)} className="text-xl text-rose-500 font-mono font-extrabold hover:text-rose-700 transition-colors hover:scale-110 inline-block">DEL</button></td></React.Fragment>
                                                                     )}
                                                                 </tr>
                                                             );
