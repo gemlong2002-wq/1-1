@@ -44,7 +44,6 @@
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        .stagger-1 { animation-delay: 0.1s; } .stagger-2 { animation-delay: 0.2s; } .stagger-3 { animation-delay: 0.3s; }
         
         /* Premium Text for Light Theme */
         .glass-text-premium { background: linear-gradient(180deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 4px 6px rgba(15, 23, 42, 0.1)); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; }
@@ -56,20 +55,17 @@
         .odometer-track { position: absolute; top: 0; left: 0; width: 100%; will-change: transform; }
         .odometer-num { height: 54px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 800; color: #0f172a; line-height: 54px; }
 
-        @keyframes neon-pulse { 0%, 100% { box-shadow: 0 0 10px rgba(14, 165, 233, 0.2), 0 0 20px rgba(14, 165, 233, 0.1); } 50% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.4), 0 0 40px rgba(14, 165, 233, 0.2); } }
         .neon-bar { animation: neon-pulse 2s infinite; }
+        @keyframes neon-pulse { 0%, 100% { box-shadow: 0 0 10px rgba(14, 165, 233, 0.2), 0 0 20px rgba(14, 165, 233, 0.1); } 50% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.4), 0 0 40px rgba(14, 165, 233, 0.2); } }
         
         .btn-glitch { position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .btn-glitch:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 25px -5px rgba(15, 23, 42, 0.4); }
-        .btn-glitch:hover::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: scan 0.6s linear; }
-        @keyframes scan { 100% { left: 200%; } }
         
         /* Light Theme Border Beam */
         .border-beam-container { position: relative; border-radius: 0.75rem; overflow: hidden; background: #e2e8f0; transition: all 0.3s; }
         .border-beam-container:hover { box-shadow: 0 10px 30px rgba(14, 165, 233, 0.15); transform: translateY(-2px); }
         .border-beam-container::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 65%, #cbd5e1 75%, #94a3b8 100%); animation: rotate 4s linear infinite; opacity: 0.8; }
         .border-beam-content { position: relative; margin: 2px; border-radius: calc(0.75rem - 2px); background: #ffffff; height: calc(100% - 4px); }
-        
         @keyframes rotate { 100% { transform: rotate(360deg); } }
         
         /* Light Theme Tags */
@@ -81,26 +77,24 @@
         input:focus { outline: none; border-color: #0ea5e9; background: #ffffff; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.15); transform: translateY(-2px); }
         
         select { background-image: none; background: #ffffff; border: 2px solid #e2e8f0; color: #0f172a; font-weight: 700; }
-        select option { background-color: #ffffff; color: #0f172a; }
         .cyber-select { appearance: none; background-color: #f1f5f9; border: 2px solid #cbd5e1; color: #334155; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .cyber-select:hover { border-color: #0ea5e9; background-color: #e0f2fe; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2); }
         .cyber-select:focus { outline: none; border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
         
-        /* Light Theme Scrollbar */
         ::-webkit-scrollbar { width: 10px; height: 10px; }
         ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.05); }
         ::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.2); border-radius: 5px; transition: all 0.3s; } 
         ::-webkit-scrollbar-thumb:hover { background: rgba(14, 165, 233, 0.6); }
 
         /* Animations */
-        @keyframes flameFlicker { 0% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(234,88,12,0.3)); } 50% { transform: scale(1.05) rotate(1deg); filter: drop-shadow(0 0 8px rgba(234,88,12,0.5)); } 100% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(234,88,12,0.3)); } }
-        .animate-flame { animation: flameFlicker 1.5s infinite; display: inline-block; transform-origin: center bottom; }
         @keyframes rocketLaunch { 0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 4px rgba(14,165,233,0.3)); } 50% { transform: translateY(-3px); filter: drop-shadow(0 0 8px rgba(14,165,233,0.5)); } }
         .animate-rocket { animation: rocketLaunch 1.5s infinite; display: inline-block; }
         @keyframes lightningPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(202,138,4,0.3)); transform: scale(1); } 50% { filter: drop-shadow(0 0 8px rgba(202,138,4,0.6)); transform: scale(1.1); } }
         .animate-lightning { animation: lightningPulse 1.5s infinite; display: inline-block; }
         @keyframes dropPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(225,29,72,0.3)); transform: translateY(0); } 50% { filter: drop-shadow(0 0 8px rgba(225,29,72,0.6)); transform: translateY(2px); } }
         .animate-drop { animation: dropPulse 2s infinite; display: inline-block; }
+        @keyframes flameFlicker { 0% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(234,88,12,0.3)); } 50% { transform: scale(1.05) rotate(1deg); filter: drop-shadow(0 0 8px rgba(234,88,12,0.5)); } 100% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(234,88,12,0.3)); } }
+        .animate-flame { animation: flameFlicker 1.5s infinite; display: inline-block; transform-origin: center bottom; }
         
         /* Brutalist Signature */
         .brutalist-stamp { border: 4px solid #0f172a; color: #0f172a; background: #ffffff; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 6px 6px 0px #0f172a; }
@@ -255,7 +249,7 @@
             if (index >= 15) colors = "from-rose-500 via-pink-500 to-orange-500";
             return {
                 ...data,
-                name: `PROJECT_LVL_${data.level}`,
+                name: "PROJECT_LVL_" + data.level,
                 colors: colors
             };
         });
@@ -429,7 +423,7 @@
                                 if (pastProgress < 0) continue;
                                 const pastPos = getPointAtProgress(pastProgress);
                                 const opacity = Math.pow(1 - (i / 40), 1.5); 
-                                ctx.fillStyle = `rgba(14, 165, 233, ${opacity})`; 
+                                ctx.fillStyle = "rgba(14, 165, 233, " + opacity + ")"; 
                                 ctx.beginPath();
                                 ctx.arc(pastPos.x, pastPos.y, 4.5 * (1 - (i / 40)), 0, Math.PI * 2);
                                 ctx.fill();
@@ -705,7 +699,7 @@
                                     <span className="text-4xl font-mono font-bold text-slate-800 vibe-hover-text">{progressPercent}%</span>
                                 </div>
                                 <div className="h-8 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200 relative z-10 shadow-inner">
-                                    <div className={`h-full bg-gradient-to-r ${activeTier.colors} relative transition-all duration-1000 shadow-md`} style={{ width: `${barProgress}%`, transition: 'width 2.5s cubic-bezier(0.22, 1, 0.36, 1), background 1s ease' }}>
+                                    <div className={"h-full relative transition-all duration-1000 shadow-md " + activeTier.colors} style={{ width: progressPercent + "%", transition: 'width 2.5s cubic-bezier(0.22, 1, 0.36, 1), background 1s ease' }}>
                                         <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
                                     </div>
                                 </div>
@@ -727,7 +721,7 @@
                                     <span className="text-slate-500 font-mono text-xs md:text-sm font-bold tracking-widest hidden sm:block">TIME_SYNC:</span>
                                     <div className="relative pointer-events-auto">
                                         <select value={timeShiftYear} onChange={(e) => setTimeShiftYear(e.target.value)} className="appearance-none bg-transparent text-cyan-600 text-sm md:text-base font-mono font-bold outline-none cursor-pointer hover:text-cyan-700 transition-colors pr-5 pl-1 border-none focus:ring-0">
-                                            {timeShiftOptions.map(y => <option key={`sync-${y}`} value={y}>[{y}]</option>)}
+                                            {timeShiftOptions.map(y => <option key={"sync-" + y} value={y}>[{y}]</option>)}
                                         </select>
                                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-cyan-500">
                                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -742,11 +736,11 @@
                                         <span className="text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text">動能差值 MOMENTUM DELTA</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${momDeltaIsPos ? 'border-emerald-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-3xl md:text-4xl font-mono font-extrabold ${momDeltaIsPos ? 'text-emerald-600' : 'text-rose-600'} whitespace-nowrap mb-2 vibe-hover-text`}>
+                                        <div className={"absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50 " + (momDeltaIsPos ? "border-emerald-500" : "border-rose-500")}>
+                                            <span className={"text-3xl md:text-4xl font-mono font-extrabold whitespace-nowrap mb-2 vibe-hover-text " + (momDeltaIsPos ? "text-emerald-600" : "text-rose-600")}>
                                                 {momDeltaIsPos ? '▲ +' : '▼ '}{Math.abs(momDeltaAmt).toLocaleString()}
                                             </span>
-                                            <span className={`text-xl md:text-2xl font-mono font-bold ${momDeltaIsPos ? 'text-emerald-600/70' : 'text-rose-600/70'} vibe-hover-text`}>
+                                            <span className={"text-xl md:text-2xl font-mono font-bold vibe-hover-text " + (momDeltaIsPos ? "text-emerald-600/70" : "text-rose-600/70")}>
                                                 ({momDeltaIsPos ? '+' : ''}{momDeltaPct.toFixed(2)}%)
                                             </span>
                                         </div>
@@ -759,12 +753,12 @@
                                 
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
-                                        <span className={`text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text`}>高點雷達 ATH RADAR</span>
+                                        <span className={"text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text " + (isATH ? "text-cyan-600/70" : "text-rose-500/70")}>高點雷達 ATH RADAR</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${isATH ? 'border-cyan-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-3xl md:text-4xl font-mono font-extrabold ${isATH ? 'text-cyan-600' : 'text-rose-600'} whitespace-nowrap mb-1 vibe-hover-text`}>
-                                                {isATH ? `🚀 +${Math.max(0, athBreakoutAmount).toLocaleString()}` : `▼ -${athDeficitAmt.toLocaleString()}`}
+                                        <div className={"absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50 " + (isATH ? "border-cyan-500" : "border-rose-500")}>
+                                            <span className={"text-3xl md:text-4xl font-mono font-extrabold whitespace-nowrap mb-1 vibe-hover-text " + (isATH ? "text-cyan-600" : "text-rose-600")}>
+                                                {isATH ? "🚀 +" + Math.max(0, athBreakoutAmount).toLocaleString() : "▼ -" + athDeficitAmt.toLocaleString()}
                                             </span>
                                             <div className="flex flex-col gap-0.5">
                                                 {!isATH && (
@@ -773,7 +767,7 @@
                                                 <span className="text-xs font-mono text-slate-400 font-extrabold tracking-wider">頂峰日期 PEAK: {athDate}</span>
                                             </div>
                                         </div>
-                                        <div className={`absolute inset-0 p-5 bg-white border-t-4 ${isATH ? 'border-cyan-500' : 'border-rose-500'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl`}>
+                                        <div className={"absolute inset-0 p-5 bg-white border-t-4 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl " + (isATH ? "border-cyan-500" : "border-rose-500")}>
                                             <span className="text-cyan-600 text-lg font-bold tracking-widest mb-1">[ARMOR_STATUS]</span>
                                             <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">
                                                 {isATH ? '裝甲完好。突破天際，顯示碾壓舊歷史高點的動能金額。' : '裝甲受損。顯示重返歷史榮耀所需 TWD，及當前相對高點之回撤率 (MDD)。'}
@@ -788,11 +782,11 @@
                                         <span className="text-slate-400 text-xs md:text-sm font-mono tracking-widest font-bold vibe-hover-text">[{timeShiftYear}]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${dynamicPlAmt >= 0 ? 'border-blue-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-3xl md:text-4xl font-mono font-extrabold leading-none mb-3 ${dynamicPlAmt >= 0 ? 'text-blue-600' : 'text-rose-600'} whitespace-nowrap vibe-hover-text`}>
+                                        <div className={"absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50 " + (dynamicPlAmt >= 0 ? "border-blue-500" : "border-rose-500")}>
+                                            <span className={"text-3xl md:text-4xl font-mono font-extrabold leading-none mb-3 whitespace-nowrap vibe-hover-text " + (dynamicPlAmt >= 0 ? "text-blue-600" : "text-rose-600")}>
                                                 {dynamicPlAmt >= 0 ? '▲ +' : '▼ '}{Math.abs(dynamicPlAmt).toLocaleString()}
                                             </span>
-                                            <span className={`text-2xl md:text-3xl font-mono font-bold ${growthIsPos ? 'text-indigo-600' : 'text-rose-600'} whitespace-nowrap vibe-hover-text`}>
+                                            <span className={"text-2xl md:text-3xl font-mono font-bold whitespace-nowrap vibe-hover-text " + (growthIsPos ? "text-indigo-600" : "text-rose-600")}>
                                                 {growthIsPos ? <span className="animate-rocket mr-1">🚀</span> : '⚠️ '}{growthIsPos ? '+' : ''}{dynamicGrowthPct.toFixed(2)}%
                                             </span>
                                         </div>
@@ -809,18 +803,19 @@
                                         <span className="text-xs md:text-sm font-mono tracking-widest border px-2 py-0.5 rounded border-indigo-200 text-indigo-600 bg-indigo-50 font-bold vibe-hover-text">[{holdingYears.toFixed(2)} YRS]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${cagrIsPos ? 'border-indigo-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-4xl md:text-5xl font-mono font-extrabold ${cagrIsPos ? 'text-indigo-600' : 'text-rose-600'} whitespace-nowrap vibe-hover-text`}>
+                                        <div className={"absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50 " + (cagrIsPos ? "border-indigo-500" : "border-rose-500")}>
+                                            <span className={"text-4xl md:text-5xl font-mono font-extrabold whitespace-nowrap vibe-hover-text " + (cagrIsPos ? "text-indigo-600" : "text-rose-600")}>
                                                 {cagrIsPos ? <span className="animate-flame mr-1">🔥</span> : '❄️ '}{cagrIsPos ? '+' : ''}{(isNaN(cagr) ? 0 : cagr).toFixed(2)}%
                                             </span>
                                         </div>
-                                        <div className={`absolute inset-0 p-5 bg-white border-t-4 ${cagrIsPos ? 'border-indigo-500' : 'border-rose-500'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl`}>
+                                        <div className={"absolute inset-0 p-5 bg-white border-t-4 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl " + (cagrIsPos ? "border-indigo-500" : "border-rose-500")}>
                                             <span className="text-indigo-600 text-lg font-bold tracking-widest mb-1">[COMPOUND_YIELD]</span>
                                             <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">真實年化複利 (CAGR)。將期間總增幅依據實際在市天數進行年化權重換算。</span>
                                         </div>
                                     </div>
                                 </div>
 
+                                {/* [OPTIMIZED: EXTREMES WINDOWED HIGHEST & LOWEST & FINAL WITH TIMESTAMPS] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className="text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text">時空極限 EXTREMES</span>
@@ -828,18 +823,24 @@
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className="absolute inset-0 px-5 py-2 flex flex-col justify-center border-l-[6px] border-violet-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50">
-                                            <div className="mb-1">
-                                                <span className="text-2xl font-mono font-extrabold text-violet-600 leading-none block vibe-hover-text">▲ {extHigh.toLocaleString()}</span>
-                                                <span className="text-xs font-mono text-slate-400 font-bold">極高日: {extHighDate}</span>
+                                            <div className="flex justify-between items-center mb-1">
+                                                <div>
+                                                    <span className="text-xl font-mono font-extrabold text-violet-600 block vibe-hover-text">▲ {extHigh.toLocaleString()}</span>
+                                                    <span className="text-[10px] font-mono text-slate-400 font-bold">HIGH: {extHighDate}</span>
+                                                </div>
+                                                <div className="text-right">
+                                                    <span className="text-xl font-mono font-extrabold text-violet-400 block vibe-hover-text">▼ {extLow.toLocaleString()}</span>
+                                                    <span className="text-[10px] font-mono text-slate-400 font-bold">LOW: {extLowDate}</span>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <span className="text-2xl font-mono font-extrabold text-violet-400 leading-none block vibe-hover-text">▼ {extLow.toLocaleString()}</span>
-                                                <span className="text-xs font-mono text-slate-400 font-bold">極低日: {extLowDate}</span>
+                                            <div className="border-t border-violet-200/50 pt-1 mt-1">
+                                                <span className="text-[10px] font-mono text-slate-400 font-bold block">期末結算 (FINAL)</span>
+                                                <span className="text-2xl font-mono font-extrabold text-slate-700 block vibe-hover-text">{timeShiftLatestAsset.toLocaleString()} TWD</span>
                                             </div>
                                         </div>
                                         <div className="absolute inset-0 p-5 bg-white border-t-4 border-violet-500 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl">
                                             <span className="text-violet-600 text-lg font-bold tracking-widest mb-1">[TIME_SHIFT_LIMITS]</span>
-                                            <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">動態時空極限。連動全局年份，檢索指定期間內的資產絕對最高與最低水位及其發生日期。</span>
+                                            <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">動態時空極限。連動全局年份，檢索指定期間內的資產最高、最低與期末餘額。</span>
                                         </div>
                                     </div>
                                 </div>
@@ -850,16 +851,16 @@
                                         <span className="text-amber-600 text-xs md:text-sm font-mono tracking-widest border border-amber-200 px-2 py-1 rounded bg-amber-50 font-bold vibe-hover-text">[{opDays} OP_DAYS]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${velocityIsPos ? 'border-amber-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-4xl md:text-5xl font-mono font-extrabold ${velocityIsPos ? 'text-amber-500' : 'text-rose-600'} whitespace-nowrap mb-1 vibe-hover-text`}>
+                                        <div className={"absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50 " + (velocityIsPos ? "border-amber-500" : "border-rose-500")}>
+                                            <span className={"text-4xl md:text-5xl font-mono font-extrabold whitespace-nowrap mb-1 vibe-hover-text " + (velocityIsPos ? "text-amber-500" : "text-rose-600")}>
                                                 {velocityIsPos ? <span className="animate-lightning mr-2">⚡</span> : <span className="animate-drop mr-2">🩸</span>}
                                                 {velocityIsPos ? '+' : ''}{(isNaN(dailyVelocity) ? 0 : Math.round(dailyVelocity)).toLocaleString()}
                                             </span>
-                                            <span className={`text-xl font-mono font-bold ${velocityIsPos ? 'text-amber-600/70' : 'text-rose-600/70'} vibe-hover-text`}>TWD / DAY</span>
+                                            <span className={"text-xl font-mono font-bold vibe-hover-text " + (velocityIsPos ? "text-amber-600/70" : "text-rose-600/70")}>TWD / DAY</span>
                                         </div>
-                                        <div className={`absolute inset-0 p-5 bg-white border-t-4 ${velocityIsPos ? 'border-amber-500' : 'border-rose-500'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl`}>
-                                            <span className={`${velocityIsPos ? 'text-amber-600' : 'text-rose-600'} text-lg font-bold tracking-widest mb-1`">[DAILY_PRINT_RATE]</span>
-                                            <span className={`text-slate-600 text-sm md:text-base font-semibold leading-tight`}>資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
+                                        <div className={"absolute inset-0 p-5 bg-white border-t-4 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl " + (velocityIsPos ? "border-amber-500" : "border-rose-500")}>
+                                            <span className={"text-lg font-bold tracking-widest mb-1 " + (velocityIsPos ? "text-amber-600" : "text-rose-600")}>[DAILY_PRINT_RATE]</span>
+                                            <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
                                         </div>
                                     </div>
                                 </div>
@@ -906,14 +907,14 @@
                         </div>
                         
                         <div className="glass-card p-8 rounded-2xl lg:col-span-2 flex flex-col stagger-2 shadow-lg border border-slate-200">
-                            <div className="flex justify-between items-center mb-8 relative z-10"><h3 className="text-2xl font-mono text-slate-800 uppercase tracking-widest font-extrabold vibe-hover-text">軌跡 Trajectory</h3><select value={chartFilter} onChange={(e) => setChartFilter(e.target.value)} className="bg-white border-2 border-slate-200 text-slate-700 text-lg font-mono rounded-lg px-4 py-2 outline-none relative z-10 font-bold focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all"><option value="last20">Last 20</option><option value="all">All Time</option>{sortedYears.map(y => <option key={y} value={y}>{y}</option>)}</select></div>
+                            <div className="flex justify-between items-center mb-8 relative z-10"><h3 className="text-2xl font-mono text-slate-800 uppercase tracking-widest font-extrabold vibe-hover-text">軌跡 Trajectory</h3><select value={chartFilter} onChange={(e) => setChartFilter(e.target.value)} className="bg-white border-2 border-slate-200 text-slate-700 text-lg font-mono rounded-lg px-4 py-2 outline-none relative z-10 font-bold focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all"><option value="last20">Last 20</option><option value="all">All Time</option>{sortedYears.map(y => <option key={"chart-opt-" + y} value={y}>{y}</option>)}</select></div>
                             <div className="flex-grow min-h-[400px] relative z-0"><canvas ref={lineChartRef}></canvas></div>
                             <div className="mt-10 pt-10 border-t border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-8 items-center relative z-10">
                                 
                                 <div className="col-span-1 h-64 lg:h-72 relative flex justify-center items-center drop-shadow-xl">
                                     <canvas ref={donutChartRef} className="relative z-10 transition-opacity duration-300"></canvas>
                                     
-                                    <div className={`absolute z-40 p-6 flex flex-col items-center justify-center rounded-2xl transition-all duration-300 ${hoveredAsset ? 'bg-white backdrop-blur-xl border border-slate-200 shadow-[0_20px_50px_rgba(15,23,42,0.15)] opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`} style={{ width: '280px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                                    <div className={"absolute z-40 p-6 flex flex-col items-center justify-center rounded-2xl transition-all duration-300 " + (hoveredAsset ? "bg-white backdrop-blur-xl border border-slate-200 shadow-[0_20px_50px_rgba(15,23,42,0.15)] opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none")} style={{ width: '280px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                                         {hoveredAsset && (
                                             <div className="flex flex-col items-center w-full">
                                                 <span className="text-xl font-extrabold font-mono tracking-widest mb-2 text-slate-500">[{hoveredAsset}_ASSET]</span>
@@ -927,7 +928,7 @@
                                         )}
                                     </div>
                                     
-                                    <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 transition-opacity duration-300 ${hoveredAsset ? 'opacity-0' : 'opacity-100'}`}>
+                                    <div className={"absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 transition-opacity duration-300 " + (hoveredAsset ? "opacity-0" : "opacity-100")}>
                                         <div className="w-24 h-24 border-2 border-slate-200 rounded-full animate-ping absolute"></div>
                                         <span className="text-slate-400 font-mono text-2xl tracking-widest font-extrabold">[ CORE ]</span>
                                     </div>
@@ -960,7 +961,6 @@
                                 const limit = visibleRows[year] || 30;
                                 const renderedData = currentYearData.slice(0, limit);
                                 
-                                // --- DOPAMINE ENGINE: TIER CALCULATION ---
                                 const startRecord = currentYearData[currentYearData.length - 1]; 
                                 const endRecord = currentYearData[0]; 
                                 
@@ -971,8 +971,7 @@
 
                                 const startTier = getTier(Number(startRecord?.總資產) || 0);
                                 const endTier = getTier(Number(endRecord?.總資產) || 0);
-                                const levelBadgeText = startTier !== endTier ? `LVL ${startTier} ➔ LVL ${endTier} GET!!!` : `LVL ${endTier} SECURED!!!`;
-                                // -----------------------------------------
+                                const levelBadgeText = startTier !== endTier ? "LVL " + startTier + " ➔ LVL " + endTier + " GET!!!" : "LVL " + endTier + " SECURED!!!";
 
                                 return (
                                     <div key={year} className="border border-slate-200 rounded-xl overflow-hidden bg-white min-w-[1000px] shadow-sm">
@@ -992,10 +991,11 @@
                                                         {renderedData.map((item) => {
                                                             const isEditing = editingRow === item._rowIndex;
                                                             const currentAsset = Number(item.總資產) || 0;
-                                                            const ytdGrowth = (((currentAsset - (Number(currentYearData[currentYearData.length - 1].總資產) || 1)) / (Number(currentYearData[currentYearData.length - 1].總資產) || 1)) * 100);
+                                                            const prevAsset = Number(currentYearData[currentYearData.length - 1].總資產) || 1;
+                                                            const ytdGrowth = (((currentAsset - prevAsset) / prevAsset) * 100);
                                                             const isBase = item._rowIndex === currentYearData[currentYearData.length - 1]._rowIndex;
                                                             return (
-                                                                <tr key={item._rowIndex} className={`table-row-vibe border-b border-slate-100 ${isEditing ? 'bg-slate-100' : ''}`}>
+                                                                <tr key={item._rowIndex} className={"table-row-vibe border-b border-slate-100 " + (isEditing ? "bg-slate-100" : "")}>
                                                                     {isEditing ? (
                                                                         <React.Fragment><td className="p-4"><input name="date" value={editFormData.date} onChange={handleEditChange} className="w-40 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="twStock" value={editFormData.twStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="usStock" value={editFormData.usStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="crypto" value={editFormData.crypto} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 space-x-4"><button onClick={() => saveEdit(item._rowIndex)} className="text-xl px-4 py-2 bg-slate-800 text-white rounded font-mono font-bold hover:bg-slate-700 transition-colors shadow">SAVE</button><button onClick={() => setEditingRow(null)} className="text-xl px-4 py-2 border-2 border-slate-300 text-slate-600 rounded font-mono font-bold hover:bg-slate-100 transition-colors">CANCEL</button></td></React.Fragment>
                                                                     ) : (
