@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amber Terminal | Vibe Matrix</title>
+    <title>Amber Terminal | White Armor Matrix</title>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -178,7 +178,7 @@
             return (
                 <div className="odometer-digit-container">
                     <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white z-10 pointer-events-none opacity-80"></div>
-                    <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-slate-200 -translate-y-1/2 z-20 pointer-events-none shadow-[0_1px_0_rgba(255,255,255,0.8)]"></div>
+                    <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-slate-200 -translate-y-1/2 z-20 pointer-events-none shadow-[0_1px_0_rgba(245,158,11,0.3)]"></div>
                     <div className="odometer-track" style={{ transform: `translateY(-${displayTarget * 54}px)`, transition: transitionStyle }}>
                         {[0,1,2,3,4,5,6,7,8,9].map(n => ( <div key={n} className="odometer-num">{n}</div> ))}
                     </div>
@@ -558,7 +558,16 @@
             const momDeltaAmt = totalAssets - (Number(prevRecord.總資產) || 0);
             const momDeltaPct = (Number(prevRecord.總資產) || 0) > 0 ? (momDeltaAmt / Number(prevRecord.總資產)) * 100 : 0;
 
-            const ath = useMemo(() => data.reduce((max, item) => Math.max(max, Number(item.總資產) || 0), 0), [data]);
+            // [UPGRADED: ATH OBJECT TRACKING ENGINE]
+            const athRecord = useMemo(() => {
+                if (!data || data.length === 0) return null;
+                return data.reduce((maxItem, item) => {
+                    return (Number(item.總資產) || 0) > (Number(maxItem.總資產) || 0) ? item : maxItem;
+                }, data[0]);
+            }, [data]);
+
+            const ath = athRecord ? (Number(athRecord.總資產) || 0) : 0;
+            const athDate = athRecord ? formatYMD(athRecord.日期) : '--';
             const isATH = totalAssets >= ath && totalAssets > 0;
             const previousDataForAth = data.length > 1 ? data.slice(0, -1) : data;
             const prevAth = useMemo(() => previousDataForAth.reduce((max, item) => Math.max(max, Number(item.總資產) || 0), 0), [previousDataForAth]);
@@ -600,16 +609,28 @@
                 return { cagr: cagrValue, holdingYears: years };
             }, [targetRecords]);
 
-            const { extHigh, extLow } = useMemo(() => {
-                if (targetRecords.length === 0) return { extHigh: 0, extLow: 0 };
-                let h = 0; let l = Infinity;
+            // [UPGRADED: EXTREMES TIME INDEXING ENGINE]
+            const extremesCalc = useMemo(() => {
+                if (targetRecords.length === 0) return { h: 0, hDate: '--', l: 0, lDate: '--' };
+                let hItem = targetRecords[0];
+                let lItem = targetRecords[0];
                 targetRecords.forEach(item => {
-                    let val = Number(item.總資產) || 0;
-                    if (val > h) h = val;
-                    if (val < l) l = val;
+                    const val = Number(item.總資產) || 0;
+                    if (val > (Number(hItem.總資產) || 0)) hItem = item;
+                    if (val < (Number(lItem.總資產) || Infinity)) lItem = item;
                 });
-                return { extHigh: h, extLow: l === Infinity ? 0 : l };
+                return {
+                    h: Number(hItem.總資產) || 0,
+                    hDate: formatYMD(hItem.日期),
+                    l: Number(lItem.總資產) || 0,
+                    lDate: formatYMD(lItem.日期)
+                };
             }, [targetRecords]);
+
+            const extHigh = extremesCalc.h;
+            const extHighDate = extremesCalc.hDate;
+            const extLow = extremesCalc.l;
+            const extLowDate = extremesCalc.lDate;
 
             const { opDays, dailyVelocity } = useMemo(() => {
                 if (targetRecords.length < 2) return { opDays: 1, dailyVelocity: 0 };
@@ -691,8 +712,8 @@
                                     </div>
                                 </div>
                                 <div className="mt-4 flex flex-col sm:flex-row justify-between text-lg md:text-xl font-mono relative z-10 font-bold opacity-80 gap-2">
-                                    <span className="text-slate-600 vibe-hover-text">TARGET: {(activeTier.target).toLocaleString()} TWD</span>
-                                    <span className="text-cyan-700 text-right vibe-hover-text">ETA: {activeTier.year} [AGE {activeTier.age}]</span>
+                                    <span className="text-slate-600">TARGET: {(activeTier.target).toLocaleString()} TWD</span>
+                                    <span className="text-cyan-700 text-right">ETA: {activeTier.year} [AGE {activeTier.age}]</span>
                                 </div>
                             </div>
                         </div>
@@ -738,18 +759,22 @@
                                     </div>
                                 </div>
                                 
+                                {/* [OPTIMIZED: ATH RADAR WITH TIMESTAMP] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className={`text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text`}>高點雷達 ATH RADAR</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${isATH ? 'border-cyan-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-3xl md:text-4xl font-mono font-extrabold ${isATH ? 'text-cyan-600' : 'text-rose-600'} whitespace-nowrap mb-2 vibe-hover-text`}>
+                                            <span className={`text-3xl md:text-4xl font-mono font-extrabold ${isATH ? 'text-cyan-600' : 'text-rose-600'} whitespace-nowrap mb-1 vibe-hover-text`}>
                                                 {isATH ? `🚀 +${Math.max(0, athBreakoutAmount).toLocaleString()}` : `▼ -${athDeficitAmt.toLocaleString()}`}
                                             </span>
-                                            {!isATH && (
-                                                <span className="text-xl md:text-2xl font-mono font-bold text-rose-600/70 vibe-hover-text">(MDD: -{athDeficitPct.toFixed(2)}%)</span>
-                                            )}
+                                            <div className="flex flex-col gap-0.5">
+                                                {!isATH && (
+                                                    <span className="text-xl font-mono font-bold text-rose-600/70 vibe-hover-text">(MDD: -{athDeficitPct.toFixed(2)}%)</span>
+                                                )}
+                                                <span className="text-xs font-mono text-slate-400 font-extrabold tracking-wider">頂峰日期 PEAK: {athDate}</span>
+                                            </div>
                                         </div>
                                         <div className={`absolute inset-0 p-5 bg-white border-t-4 ${isATH ? 'border-cyan-500' : 'border-rose-500'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl`}>
                                             <span className="text-cyan-600 text-lg font-bold tracking-widest mb-1">[ARMOR_STATUS]</span>
@@ -788,7 +813,7 @@
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${cagrIsPos ? 'border-indigo-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-4xl md:text-5xl font-mono font-extrabold ${cagrIsPos ? 'text-indigo-600' : 'text-rose-600'} whitespace-nowrap vibe-hover-text`}>
+                                            <span className={`text-4xl md:text-5xl font-mono font-extrabold ${cagrIsPos ? 'text-indigo-600' : 'text-rose-600'} whitespace-nowrap`}>
                                                 {cagrIsPos ? <span className="animate-flame mr-1">🔥</span> : '❄️ '}{cagrIsPos ? '+' : ''}{(isNaN(cagr) ? 0 : cagr).toFixed(2)}%
                                             </span>
                                         </div>
@@ -799,19 +824,26 @@
                                     </div>
                                 </div>
 
+                                {/* [OPTIMIZED: EXTREMES WINDOWED HIGHEST & LOWEST WITH TIMESTAMPS] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className="text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text">時空極限 EXTREMES</span>
                                         <span className="text-slate-400 text-xs md:text-sm font-mono tracking-widest font-bold vibe-hover-text">[{timeShiftYear}]</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
-                                        <div className="absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] border-violet-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50">
-                                            <span className="text-2xl md:text-3xl font-mono font-extrabold text-violet-600 leading-none whitespace-nowrap mb-2 vibe-hover-text">▲ {extHigh.toLocaleString()}</span>
-                                            <span className="text-2xl md:text-3xl font-mono font-extrabold text-violet-400 leading-none whitespace-nowrap vibe-hover-text">▼ {extLow.toLocaleString()}</span>
+                                        <div className="absolute inset-0 px-5 py-2 flex flex-col justify-center border-l-[6px] border-violet-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50">
+                                            <div className="mb-1">
+                                                <span className="text-2xl font-mono font-extrabold text-violet-600 leading-none block">▲ {extHigh.toLocaleString()}</span>
+                                                <span className="text-xs font-mono text-slate-400 font-bold">極高日: {extHighDate}</span>
+                                            </div>
+                                            <div>
+                                                <span className="text-2xl font-mono font-extrabold text-violet-400 leading-none block">▼ {extLow.toLocaleString()}</span>
+                                                <span className="text-xs font-mono text-slate-400 font-bold">極低日: {extLowDate}</span>
+                                            </div>
                                         </div>
                                         <div className="absolute inset-0 p-5 bg-white border-t-4 border-violet-500 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl">
                                             <span className="text-violet-600 text-lg font-bold tracking-widest mb-1">[TIME_SHIFT_LIMITS]</span>
-                                            <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">動態時空極限。連動全局年份，檢索指定期間內的資產絕對高低水位。</span>
+                                            <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">動態時空極限。連動全局年份，檢索指定期間內的資產絕對最高與最低水位及其發生日期。</span>
                                         </div>
                                     </div>
                                 </div>
@@ -955,7 +987,7 @@
                                                         })}
                                                     </tbody>
                                                 </table>
-                                                {limit < currentYearData.length && <div className="p-6 bg-slate-50 text-center border-t border-slate-200"><button onClick={() => loadMoreRows(year)} className="text-xl font-mono text-slate-500 font-extrabold tracking-widest hover:text-cyan-600 transition-colors outline-none vibe-hover-text">[ LOAD_MORE_DATA ]</button></div>}
+                                                {limit < currentYearData.length && <div className="p-6 bg-slate-50 text-center border-t border-slate-200"><button onClick={() => loadMoreRows(year)} className="text-xl font-mono text-slate-500 font-extrabold tracking-widest hover:text-slate-800 transition-colors outline-none vibe-hover-text">[ LOAD_MORE_DATA ]</button></div>}
                                             </div>
                                         )}
                                     </div>
