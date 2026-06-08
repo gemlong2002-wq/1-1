@@ -178,7 +178,7 @@
             return (
                 <div className="odometer-digit-container">
                     <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white z-10 pointer-events-none opacity-80"></div>
-                    <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-slate-200 -translate-y-1/2 z-20 pointer-events-none shadow-[0_1px_0_rgba(245,158,11,0.3)]"></div>
+                    <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-slate-200 -translate-y-1/2 z-20 pointer-events-none shadow-[0_1px_0_rgba(255,255,255,0.8)]"></div>
                     <div className="odometer-track" style={{ transform: `translateY(-${displayTarget * 54}px)`, transition: transitionStyle }}>
                         {[0,1,2,3,4,5,6,7,8,9].map(n => ( <div key={n} className="odometer-num">{n}</div> ))}
                     </div>
@@ -558,7 +558,6 @@
             const momDeltaAmt = totalAssets - (Number(prevRecord.總資產) || 0);
             const momDeltaPct = (Number(prevRecord.總資產) || 0) > 0 ? (momDeltaAmt / Number(prevRecord.總資產)) * 100 : 0;
 
-            // [UPGRADED: ATH OBJECT TRACKING ENGINE]
             const athRecord = useMemo(() => {
                 if (!data || data.length === 0) return null;
                 return data.reduce((maxItem, item) => {
@@ -609,7 +608,6 @@
                 return { cagr: cagrValue, holdingYears: years };
             }, [targetRecords]);
 
-            // [UPGRADED: EXTREMES TIME INDEXING ENGINE]
             const extremesCalc = useMemo(() => {
                 if (targetRecords.length === 0) return { h: 0, hDate: '--', l: 0, lDate: '--' };
                 let hItem = targetRecords[0];
@@ -712,8 +710,8 @@
                                     </div>
                                 </div>
                                 <div className="mt-4 flex flex-col sm:flex-row justify-between text-lg md:text-xl font-mono relative z-10 font-bold opacity-80 gap-2">
-                                    <span className="text-slate-600">TARGET: {(activeTier.target).toLocaleString()} TWD</span>
-                                    <span className="text-cyan-700 text-right">ETA: {activeTier.year} [AGE {activeTier.age}]</span>
+                                    <span className="text-slate-600 vibe-hover-text">TARGET: {(activeTier.target).toLocaleString()} TWD</span>
+                                    <span className="text-cyan-700 text-right vibe-hover-text">ETA: {activeTier.year} [AGE {activeTier.age}]</span>
                                 </div>
                             </div>
                         </div>
@@ -759,7 +757,6 @@
                                     </div>
                                 </div>
                                 
-                                {/* [OPTIMIZED: ATH RADAR WITH TIMESTAMP] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className={`text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text`}>高點雷達 ATH RADAR</span>
@@ -813,7 +810,7 @@
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={`absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] ${cagrIsPos ? 'border-indigo-500' : 'border-rose-500'} transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50`}>
-                                            <span className={`text-4xl md:text-5xl font-mono font-extrabold ${cagrIsPos ? 'text-indigo-600' : 'text-rose-600'} whitespace-nowrap`}>
+                                            <span className={`text-4xl md:text-5xl font-mono font-extrabold ${cagrIsPos ? 'text-indigo-600' : 'text-rose-600'} whitespace-nowrap vibe-hover-text`}>
                                                 {cagrIsPos ? <span className="animate-flame mr-1">🔥</span> : '❄️ '}{cagrIsPos ? '+' : ''}{(isNaN(cagr) ? 0 : cagr).toFixed(2)}%
                                             </span>
                                         </div>
@@ -824,7 +821,6 @@
                                     </div>
                                 </div>
 
-                                {/* [OPTIMIZED: EXTREMES WINDOWED HIGHEST & LOWEST WITH TIMESTAMPS] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
                                         <span className="text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text">時空極限 EXTREMES</span>
@@ -833,11 +829,11 @@
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className="absolute inset-0 px-5 py-2 flex flex-col justify-center border-l-[6px] border-violet-500 transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50">
                                             <div className="mb-1">
-                                                <span className="text-2xl font-mono font-extrabold text-violet-600 leading-none block">▲ {extHigh.toLocaleString()}</span>
+                                                <span className="text-2xl font-mono font-extrabold text-violet-600 leading-none block vibe-hover-text">▲ {extHigh.toLocaleString()}</span>
                                                 <span className="text-xs font-mono text-slate-400 font-bold">極高日: {extHighDate}</span>
                                             </div>
                                             <div>
-                                                <span className="text-2xl font-mono font-extrabold text-violet-400 leading-none block">▼ {extLow.toLocaleString()}</span>
+                                                <span className="text-2xl font-mono font-extrabold text-violet-400 leading-none block vibe-hover-text">▼ {extLow.toLocaleString()}</span>
                                                 <span className="text-xs font-mono text-slate-400 font-bold">極低日: {extLowDate}</span>
                                             </div>
                                         </div>
@@ -862,7 +858,7 @@
                                             <span className={`text-xl font-mono font-bold ${velocityIsPos ? 'text-amber-600/70' : 'text-rose-600/70'} vibe-hover-text`}>TWD / DAY</span>
                                         </div>
                                         <div className={`absolute inset-0 p-5 bg-white border-t-4 ${velocityIsPos ? 'border-amber-500' : 'border-rose-500'} flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl`}>
-                                            <span className={`${velocityIsPos ? 'text-amber-600' : 'text-rose-600'} text-lg font-bold tracking-widest mb-1`}>[DAILY_PRINT_RATE]</span>
+                                            <span className={`${velocityIsPos ? 'text-amber-600' : 'text-rose-600'} text-lg font-bold tracking-widest mb-1`">[DAILY_PRINT_RATE]</span>
                                             <span className={`text-slate-600 text-sm md:text-base font-semibold leading-tight`}>資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
                                         </div>
                                     </div>
@@ -963,9 +959,32 @@
                                 const isOpen = expandedYears[year];
                                 const limit = visibleRows[year] || 30;
                                 const renderedData = currentYearData.slice(0, limit);
+                                
+                                // --- DOPAMINE ENGINE: TIER CALCULATION ---
+                                const startRecord = currentYearData[currentYearData.length - 1]; 
+                                const endRecord = currentYearData[0]; 
+                                
+                                const getTier = (total) => {
+                                    let idx = compoundTargets.findIndex(t => total < t.target);
+                                    return idx === -1 ? 20 : idx + 1;
+                                };
+
+                                const startTier = getTier(Number(startRecord?.總資產) || 0);
+                                const endTier = getTier(Number(endRecord?.總資產) || 0);
+                                const levelBadgeText = startTier !== endTier ? `LVL ${startTier} ➔ LVL ${endTier} GET!!!` : `LVL ${endTier} SECURED!!!`;
+                                // -----------------------------------------
+
                                 return (
                                     <div key={year} className="border border-slate-200 rounded-xl overflow-hidden bg-white min-w-[1000px] shadow-sm">
-                                        <button onClick={() => toggleYear(year)} className="w-full flex justify-between items-center p-6 md:p-8 hover:bg-slate-50 transition-colors cursor-pointer outline-none"><span className="font-extrabold text-slate-800 font-mono text-4xl md:text-5xl vibe-hover-text">{year}</span><span className="text-xl md:text-2xl text-slate-500 font-mono font-bold vibe-hover-text">{currentYearData.length} RECORDS</span></button>
+                                        <button onClick={() => toggleYear(year)} className="w-full flex justify-between items-center p-6 md:p-8 hover:bg-slate-50 transition-colors cursor-pointer outline-none group relative">
+                                            <div className="flex items-center relative">
+                                                <span className="font-extrabold text-slate-800 font-mono text-4xl md:text-5xl vibe-hover-text">{year}</span>
+                                                <span className="opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out transform translate-x-[-10px] group-hover:translate-x-0 text-cyan-500 font-extrabold text-xl md:text-2xl tracking-widest drop-shadow-[0_0_12px_rgba(6,182,212,0.8)] animate-pulse absolute left-full ml-6 whitespace-nowrap pointer-events-none">
+                                                    {levelBadgeText}
+                                                </span>
+                                            </div>
+                                            <span className="text-xl md:text-2xl text-slate-500 font-mono font-bold vibe-hover-text">{currentYearData.length} RECORDS</span>
+                                        </button>
                                         {isOpen && (
                                             <div className="overflow-x-auto border-t border-slate-200">
                                                 <table className="w-full text-left whitespace-nowrap"><thead className="bg-slate-100"><tr><th className="p-6 text-xl font-mono text-slate-600">Date</th><th className="p-6 text-xl font-mono text-slate-600">TW</th><th className="p-6 text-xl font-mono text-slate-600">US</th><th className="p-6 text-xl font-mono text-slate-600">Crypto</th><th className="p-6 text-xl font-mono text-slate-600">YTD Δ</th><th className="p-6 text-xl font-mono text-slate-800 font-extrabold">Total Asset</th><th className="p-6 text-xl font-mono text-slate-600">Action</th></tr></thead>
@@ -987,7 +1006,7 @@
                                                         })}
                                                     </tbody>
                                                 </table>
-                                                {limit < currentYearData.length && <div className="p-6 bg-slate-50 text-center border-t border-slate-200"><button onClick={() => loadMoreRows(year)} className="text-xl font-mono text-slate-500 font-extrabold tracking-widest hover:text-slate-800 transition-colors outline-none vibe-hover-text">[ LOAD_MORE_DATA ]</button></div>}
+                                                {limit < currentYearData.length && <div className="p-6 bg-slate-50 text-center border-t border-slate-200"><button onClick={() => loadMoreRows(year)} className="text-xl font-mono text-slate-500 font-extrabold tracking-widest hover:text-cyan-600 transition-colors outline-none vibe-hover-text">[ LOAD_MORE_DATA ]</button></div>}
                                             </div>
                                         )}
                                     </div>
