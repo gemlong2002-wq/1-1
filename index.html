@@ -45,9 +45,11 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         
+        /* Premium Text for Light Theme */
         .glass-text-premium { background: linear-gradient(180deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 4px 6px rgba(15, 23, 42, 0.1)); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; }
-        .glass-text-premium:hover { filter: drop-shadow(0 15px 20px rgba(14, 165, 233, 0.4)) drop-shadow(0 0 10px rgba(14,165,233,0.2)); transform: scale(1.05) translateY(-4px); background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-text-premium:hover { filter: drop-shadow(0 15px 20px rgba(14, 165, 233, 0.4)) drop-shadow(0 0 10px rgba(14,165,233,0.2)); transform: scale(1.08) translateY(-4px); background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
+        /* Light Theme Odometer */
         .odometer-digit-container { display: inline-block; position: relative; width: 36px; height: 54px; flex-shrink: 0; background: #ffffff; border: 2px solid rgba(15, 23, 42, 0.1); border-radius: 8px; margin: 0 4px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.3s; }
         .odometer-digit-container:hover { border-color: rgba(14, 165, 233, 0.5); box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); transform: translateY(-2px); }
         .odometer-track { position: absolute; top: 0; left: 0; width: 100%; will-change: transform; }
@@ -96,7 +98,6 @@
         .table-row-vibe { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .table-row-vibe:hover { transform: scale(1.01) translateX(10px); background-color: #f1f5f9; box-shadow: -5px 5px 15px rgba(15, 23, 42, 0.05); border-left: 4px solid #0ea5e9; }
 
-        /* Custom Scrollbar for Modal */
         .modal-scroll::-webkit-scrollbar { width: 8px; }
         .modal-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
         .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -245,11 +246,7 @@
             if (index >= 5) colors = "from-emerald-500 via-teal-500 to-cyan-500";
             if (index >= 10) colors = "from-violet-500 via-purple-500 to-fuchsia-500";
             if (index >= 15) colors = "from-rose-500 via-pink-500 to-orange-500";
-            return {
-                ...data,
-                name: "PROJECT_LVL_" + data.level,
-                colors: colors
-            };
+            return { ...data, name: "PROJECT_LVL_" + data.level, colors: colors };
         });
 
         const Dashboard = () => {
@@ -790,26 +787,47 @@
                                     </div>
                                 </div>
                                 
+                                {/* [UPGRADED: HULL INTEGRITY & DAMAGE REPAIR BAR] */}
                                 <div className="relative rounded-xl overflow-hidden glass-card h-44 flex flex-col holo-card" onMouseMove={handleMouseMove}>
                                     <div className="px-5 pt-4 pb-2 flex justify-between items-center relative z-30">
-                                        <span className={"text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text " + (isATH ? "text-cyan-600/70" : "text-rose-500/70")}>高點雷達 ATH RADAR</span>
+                                        <span className={`text-slate-500 text-sm md:text-base font-mono uppercase tracking-wider font-extrabold shrink-0 vibe-hover-text`}>戰損裝甲 ATH RADAR</span>
                                     </div>
                                     <div className="group relative flex-grow cursor-crosshair">
                                         <div className={"absolute inset-0 px-5 pb-4 flex flex-col justify-center border-l-[6px] transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 bg-slate-50/50 " + (isATH ? "border-cyan-500" : "border-rose-500")}>
-                                            <span className={"text-3xl md:text-4xl font-mono font-extrabold whitespace-nowrap mb-1 vibe-hover-text " + (isATH ? "text-cyan-600" : "text-rose-600")}>
-                                                {isATH ? "🚀 +" + Math.max(0, athBreakoutAmount).toLocaleString() : "▼ -" + athDeficitAmt.toLocaleString()}
-                                            </span>
-                                            <div className="flex flex-col gap-0.5">
-                                                {!isATH && (
-                                                    <span className="text-xl font-mono font-bold text-rose-600/70 vibe-hover-text">(MDD: -{athDeficitPct.toFixed(2)}%)</span>
-                                                )}
-                                                <span className="text-xs font-mono text-slate-400 font-extrabold tracking-wider">頂峰日期 PEAK: {athDate}</span>
-                                            </div>
+                                            {isATH ? (
+                                                <Fragment>
+                                                    <span className="text-3xl md:text-4xl font-mono font-extrabold text-cyan-600 whitespace-nowrap mb-1 vibe-hover-text">
+                                                        🚀 ATH SECURED
+                                                    </span>
+                                                    <div className="w-full bg-slate-200 h-2 rounded mt-2 overflow-hidden shadow-inner">
+                                                        <div className="bg-cyan-500 h-full w-full shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                                                    </div>
+                                                    <span className="text-xs font-mono text-cyan-600 font-extrabold tracking-wider mt-1">SHIELD INTEGRITY: 100%</span>
+                                                </Fragment>
+                                            ) : (
+                                                <Fragment>
+                                                    <div className="flex justify-between items-end mb-1">
+                                                        <span className="text-2xl md:text-3xl font-mono font-extrabold text-rose-600 whitespace-nowrap vibe-hover-text">
+                                                            ▼ -{athDeficitAmt.toLocaleString()}
+                                                        </span>
+                                                        <span className="text-sm font-mono font-bold text-rose-500/70 vibe-hover-text">MDD: -{athDeficitPct.toFixed(2)}%</span>
+                                                    </div>
+                                                    
+                                                    {/* DAMAGE REPAIR HEALTH BAR */}
+                                                    <div className="w-full bg-slate-200 h-3 rounded overflow-hidden shadow-inner relative mt-1 mb-1">
+                                                        <div className="bg-gradient-to-r from-rose-500 to-amber-500 h-full transition-all duration-1000" style={{ width: ((totalAssets / (ath || 1)) * 100) + "%" }}></div>
+                                                    </div>
+                                                    <div className="flex justify-between text-[10px] font-mono font-bold text-slate-500 mt-1">
+                                                        <span>INTEGRITY: {((totalAssets / (ath || 1)) * 100).toFixed(1)}%</span>
+                                                        <span>RECOVERY: +{((athDeficitAmt / (totalAssets || 1)) * 100).toFixed(1)}%</span>
+                                                    </div>
+                                                </Fragment>
+                                            )}
                                         </div>
                                         <div className={"absolute inset-0 p-5 bg-white border-t-4 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl " + (isATH ? "border-cyan-500" : "border-rose-500")}>
                                             <span className="text-cyan-600 text-lg font-bold tracking-widest mb-1">[ARMOR_STATUS]</span>
                                             <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">
-                                                {isATH ? '裝甲完好。突破天際，顯示碾壓舊歷史高點的動能金額。' : '裝甲受損。顯示重返歷史榮耀所需 TWD，及當前相對高點之回撤率 (MDD)。'}
+                                                {isATH ? '裝甲完好。突破天際，顯示碾壓舊歷史高點的動能金額。' : '裝甲受損。顯示重返歷史榮耀(破前高)所需的「相對漲幅」與當前資本血量。'}
                                             </span>
                                         </div>
                                     </div>
@@ -897,8 +915,8 @@
                                             <span className={"text-xl font-mono font-bold vibe-hover-text " + (velocityIsPos ? "text-amber-600/70" : "text-rose-600/70")}>TWD / DAY</span>
                                         </div>
                                         <div className={"absolute inset-0 p-5 bg-white border-t-4 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl " + (velocityIsPos ? "border-amber-500" : "border-rose-500")}>
-                                            <span className={"text-lg font-bold tracking-widest mb-1 " + (velocityIsPos ? "text-amber-600" : "text-rose-600")}>[DAILY_PRINT_RATE]</span>
-                                            <span className="text-slate-600 text-sm md:text-base font-semibold leading-tight">資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
+                                            <span className={`${velocityIsPos ? 'text-amber-600' : 'text-rose-600'} text-lg font-bold tracking-widest mb-1`}>[DAILY_PRINT_RATE]</span>
+                                            <span className={`text-slate-600 text-sm md:text-base font-semibold leading-tight`}>資本流速 (日均印鈔力)。連動全局年份，將期間總損益除以實際運作天數，顯示平均每天的絕對資金進出量。</span>
                                         </div>
                                     </div>
                                 </div>
@@ -945,7 +963,7 @@
                         </div>
                         
                         <div className="glass-card p-8 rounded-2xl lg:col-span-2 flex flex-col stagger-2 shadow-lg border border-slate-200">
-                            <div className="flex justify-between items-center mb-8 relative z-10"><h3 className="text-2xl font-mono text-slate-800 uppercase tracking-widest font-extrabold vibe-hover-text">軌跡 Trajectory</h3><select value={chartFilter} onChange={(e) => setChartFilter(e.target.value)} className="bg-white border-2 border-slate-200 text-slate-700 text-lg font-mono rounded-lg px-4 py-2 outline-none relative z-10 font-bold focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all"><option value="last20">Last 20</option><option value="all">All Time</option>{sortedYears.map(y => <option key={"chart-" + y} value={y}>{y}</option>)}</select></div>
+                            <div className="flex justify-between items-center mb-8 relative z-10"><h3 className="text-2xl font-mono text-slate-800 uppercase tracking-widest font-extrabold vibe-hover-text">軌跡 Trajectory</h3><select value={chartFilter} onChange={(e) => setChartFilter(e.target.value)} className="bg-white border-2 border-slate-200 text-slate-700 text-lg font-mono rounded-lg px-4 py-2 outline-none relative z-10 font-bold focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all"><option value="last20">Last 20</option><option value="all">All Time</option>{sortedYears.map(y => <option key={"chart-opt-" + y} value={y}>{y}</option>)}</select></div>
                             <div className="flex-grow min-h-[400px] relative z-0"><canvas ref={lineChartRef}></canvas></div>
                             <div className="mt-10 pt-10 border-t border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-8 items-center relative z-10">
                                 
@@ -1016,54 +1034,4 @@
                                         <button onClick={() => toggleYear(year)} className="w-full flex justify-between items-center p-6 md:p-8 hover:bg-slate-50 transition-colors cursor-pointer outline-none group relative">
                                             <div className="flex items-center relative">
                                                 <span className="font-extrabold text-slate-800 font-mono text-4xl md:text-5xl vibe-hover-text">{year}</span>
-                                                <span className="opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out transform translate-x-[-10px] group-hover:translate-x-0 text-cyan-500 font-extrabold text-xl md:text-2xl tracking-widest drop-shadow-[0_0_12px_rgba(6,182,212,0.8)] animate-pulse absolute left-full ml-6 whitespace-nowrap pointer-events-none">
-                                                    {levelBadgeText}
-                                                </span>
-                                            </div>
-                                            <span className="text-xl md:text-2xl text-slate-500 font-mono font-bold vibe-hover-text">{currentYearData.length} RECORDS</span>
-                                        </button>
-                                        {isOpen && (
-                                            <div className="overflow-x-auto border-t border-slate-200">
-                                                <table className="w-full text-left whitespace-nowrap"><thead className="bg-slate-100"><tr><th className="p-6 text-xl font-mono text-slate-600">Date</th><th className="p-6 text-xl font-mono text-slate-600">TW</th><th className="p-6 text-xl font-mono text-slate-600">US</th><th className="p-6 text-xl font-mono text-slate-600">Crypto</th><th className="p-6 text-xl font-mono text-slate-600">YTD Δ</th><th className="p-6 text-xl font-mono text-slate-800 font-extrabold">Total Asset</th><th className="p-6 text-xl font-mono text-slate-600">Action</th></tr></thead>
-                                                    <tbody>
-                                                        {renderedData.map((item) => {
-                                                            const isEditing = editingRow === item._rowIndex;
-                                                            const currentAsset = Number(item.總資產) || 0;
-                                                            const prevAsset = Number(currentYearData[currentYearData.length - 1].總資產) || 1;
-                                                            const ytdGrowth = (((currentAsset - prevAsset) / prevAsset) * 100);
-                                                            const isBase = item._rowIndex === currentYearData[currentYearData.length - 1]._rowIndex;
-                                                            return (
-                                                                <tr key={item._rowIndex} className={"table-row-vibe border-b border-slate-100 " + (isEditing ? "bg-slate-100" : "")}>
-                                                                    {isEditing ? (
-                                                                        <React.Fragment><td className="p-4"><input name="date" value={editFormData.date} onChange={handleEditChange} className="w-40 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="twStock" value={editFormData.twStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="usStock" value={editFormData.usStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="crypto" value={editFormData.crypto} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 space-x-4"><button onClick={() => saveEdit(item._rowIndex)} className="text-xl px-4 py-2 bg-slate-800 text-white rounded font-mono font-bold hover:bg-slate-700 transition-colors shadow">SAVE</button><button onClick={() => setEditingRow(null)} className="text-xl px-4 py-2 border-2 border-slate-300 text-slate-600 rounded font-mono font-bold hover:bg-slate-100 transition-colors">CANCEL</button></td></React.Fragment>
-                                                                    ) : (
-                                                                        <React.Fragment><td className="p-6 text-2xl font-mono text-slate-800 font-bold">{formatYMD(item.日期)}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.台股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.美股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500">{Number(item.加密貨幣).toLocaleString()}</td><td className="p-6 text-2xl font-extrabold font-mono">{isBase ? <span className="text-slate-400">BASE</span> : <span className={ytdGrowth >= 0 ? "text-emerald-600" : "text-rose-600"}>{ytdGrowth >= 0 ? '▲ +' : '▼ '}{ytdGrowth.toFixed(2)}%</span>}</td><td className="p-6 text-3xl font-extrabold font-mono relative"><div className="flex items-center gap-5"><span className="text-slate-800">{Number(item.總資產).toLocaleString()}</span>{item.milestone === 'up' && <span className="text-lg px-3 py-1 rounded cyber-tag-up font-bold animate-pulse">▲ LVL {item.tier} UNLOCKED</span>}{item.milestone === 'down' && <span className="text-lg px-3 py-1 rounded cyber-tag-down font-bold animate-pulse">▼ LVL {item.prevTier} LOST</span>}</div></td><td className="p-6 space-x-6 relative z-10"><button onClick={() => startEdit(item)} className="text-xl text-cyan-600 font-mono font-extrabold hover:text-cyan-800 transition-colors hover:scale-110 inline-block">EDIT</button><button onClick={() => handleDelete(item._rowIndex)} className="text-xl text-rose-500 font-mono font-extrabold hover:text-rose-700 transition-colors hover:scale-110 inline-block">DEL</button></td></React.Fragment>
-                                                                    )}
-                                                                </tr>
-                                                            );
-                                                        })}
-                                                    </tbody>
-                                                </table>
-                                                {limit < currentYearData.length && <div className="p-6 bg-slate-50 text-center border-t border-slate-200"><button onClick={() => loadMoreRows(year)} className="text-xl font-mono text-slate-500 font-extrabold tracking-widest hover:text-cyan-600 transition-colors outline-none vibe-hover-text">[ LOAD_MORE_DATA ]</button></div>}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="mt-20 pt-10 text-center relative z-10 mb-10">
-                        <span className="inline-block brutalist-stamp px-10 py-5 font-mono text-2xl tracking-[0.3em] md:tracking-[0.5em] cursor-crosshair">
-                            AUTHORIZED BY CHANGSHENG LIU
-                        </span>
-                    </div>
-
-                </div>
-            );
-        };
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<Dashboard />);
-    </script>
-</body>
-</html>
+                                                <span className="opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out transform translate-x-[-10px] group-hover:translate-x-0 text-cyan-500 font-extrabold text-xl md:text-2xl tracking-widest
