@@ -97,6 +97,12 @@
         html.dark select { background: rgba(0,0,0,0.4); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
         select option { background-color: #ffffff; color: #0f172a; }
         html.dark select option { background-color: #0f111a; color: #f59e0b; }
+        .cyber-select { appearance: none; background-color: #f1f5f9; border: 2px solid #cbd5e1; color: #334155; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        html.dark .cyber-select { background-color: rgba(8, 51, 68, 0.8); border-color: rgba(6, 182, 212, 0.5); color: rgb(103, 232, 249); box-shadow: 0 0 10px rgba(6,182,212,0.2); }
+        .cyber-select:hover { border-color: #0ea5e9; background-color: #e0f2fe; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2); }
+        html.dark .cyber-select:hover { border-color: rgb(6, 182, 212); background-color: rgba(8, 51, 68, 1); box-shadow: 0 0 15px rgba(6,182,212,0.4); transform: translateY(-2px); }
+        .cyber-select:focus { outline: none; border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+        html.dark .cyber-select:focus { outline: none; border-color: rgb(34, 211, 238); box-shadow: 0 0 20px rgba(34,211,238,0.5); }
         
         ::-webkit-scrollbar { width: 10px; height: 10px; }
         ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.05); }
@@ -249,27 +255,68 @@
             return y + m + day;
         };
 
+        // [UPGRADED 60-LEVEL MICRO-STEP MATRIX]
         const compoundTargets = [
             { level: 1, target: 2561979, age: 39, year: 2024 },
             { level: 2, target: 3074375, age: 40, year: 2025 },
             { level: 3, target: 3689250, age: 41, year: 2026 },
             { level: 4, target: 4427100, age: 42, year: 2027 },
-            { level: 5, target: 5312519, age: 43, year: 2028 },
-            { level: 6, target: 6375023, age: 44, year: 2029 },
-            { level: 7, target: 7650028, age: 45, year: 2030 },
-            { level: 8, target: 9180034, age: 46, year: 2031 },
-            { level: 9, target: 11016040, age: 47, year: 2032 },
-            { level: 10, target: 13219248, age: 48, year: 2033 },
-            { level: 11, target: 15863098, age: 49, year: 2034 },
-            { level: 12, target: 19035718, age: 50, year: 2035 },
-            { level: 13, target: 22842861, age: 51, year: 2036 },
-            { level: 14, target: 27411433, age: 52, year: 2037 },
-            { level: 15, target: 32893720, age: 53, year: 2038 },
-            { level: 16, target: 39472464, age: 54, year: 2039 },
-            { level: 17, target: 47366957, age: 55, year: 2040 },
-            { level: 18, target: 56840348, age: 56, year: 2041 },
-            { level: 19, target: 68208418, age: 57, year: 2042 },
-            { level: 20, target: 81850101, age: 58, year: 2043 }
+            { level: 5, target: 4555067, age: 43, year: 2028 },
+            { level: 6, target: 4555067, age: 44, year: 2029 },
+            { level: 7, target: 5312519, age: 45, year: 2030 },
+            { level: 8, target: 5466080, age: 46, year: 2031 },
+            { level: 9, target: 5898080, age: 47, year: 2032 },
+            { level: 10, target: 6375023, age: 48, year: 2033 },
+            { level: 11, target: 6559296, age: 49, year: 2034 },
+            { level: 12, target: 7509696, age: 50, year: 2035 },
+            { level: 13, target: 7650028, age: 51, year: 2036 },
+            { level: 14, target: 7871156, age: 52, year: 2037 },
+            { level: 15, target: 9180034, age: 53, year: 2038 },
+            { level: 16, target: 9443636, age: 54, year: 2039 },
+            { level: 17, target: 9445387, age: 55, year: 2040 },
+            { level: 18, target: 11016040, age: 56, year: 2041 },
+            { level: 19, target: 11334464, age: 57, year: 2042 },
+            { level: 20, target: 11764363, age: 58, year: 2043 },
+            { level: 21, target: 13219248, age: 59, year: 2044 },
+            { level: 22, target: 13601357, age: 60, year: 2045 },
+            { level: 23, target: 14549236, age: 61, year: 2046 },
+            { level: 24, target: 15863098, age: 62, year: 2047 },
+            { level: 25, target: 16321629, age: 63, year: 2048 },
+            { level: 26, target: 17891083, age: 64, year: 2049 },
+            { level: 27, target: 19035718, age: 65, year: 2050 },
+            { level: 28, target: 19585954, age: 66, year: 2051 },
+            { level: 29, target: 21901299, age: 67, year: 2052 },
+            { level: 30, target: 22842861, age: 68, year: 2053 },
+            { level: 31, target: 23503145, age: 69, year: 2054 },
+            { level: 32, target: 26713559, age: 70, year: 2055 },
+            { level: 33, target: 27411433, age: 71, year: 2056 },
+            { level: 34, target: 28203774, age: 72, year: 2057 },
+            { level: 35, target: 32488271, age: 73, year: 2058 },
+            { level: 36, target: 32893720, age: 74, year: 2059 },
+            { level: 37, target: 33844529, age: 75, year: 2060 },
+            { level: 38, target: 39417925, age: 76, year: 2061 },
+            { level: 39, target: 39472464, age: 77, year: 2062 },
+            { level: 40, target: 40613435, age: 78, year: 2063 },
+            { level: 41, target: 47366957, age: 79, year: 2064 },
+            { level: 42, target: 47733510, age: 80, year: 2065 },
+            { level: 43, target: 48736122, age: 81, year: 2066 },
+            { level: 44, target: 56840348, age: 82, year: 2067 },
+            { level: 45, target: 57712212, age: 83, year: 2068 },
+            { level: 46, target: 58483346, age: 84, year: 2069 },
+            { level: 47, target: 68208418, age: 85, year: 2070 },
+            { level: 48, target: 69686654, age: 86, year: 2071 },
+            { level: 49, target: 70180016, age: 87, year: 2072 },
+            { level: 50, target: 81850101, age: 88, year: 2073 },
+            { level: 51, target: 84055985, age: 89, year: 2074 },
+            { level: 52, target: 84216019, age: 90, year: 2075 },
+            { level: 53, target: 101059222, age: 91, year: 2076 },
+            { level: 54, target: 101299182, age: 92, year: 2077 },
+            { level: 55, target: 121271067, age: 93, year: 2078 },
+            { level: 56, target: 121991019, age: 94, year: 2079 },
+            { level: 57, target: 145525280, age: 95, year: 2080 },
+            { level: 58, target: 146821222, age: 96, year: 2081 },
+            { level: 59, target: 176617467, age: 97, year: 2082 },
+            { level: 60, target: 212372960, age: 98, year: 2083 }
         ];
 
         const Dashboard = () => {
@@ -285,13 +332,16 @@
                 localStorage.setItem('amber-theme', theme);
             }, [theme]);
 
+            // [60-STAGE COLOR MAPPING ENGINE]
             const tierConfigs = useMemo(() => {
                 return compoundTargets.map((data, index) => {
                     let colorsLight = "from-cyan-500 via-blue-500 to-indigo-500";
                     let colorsDark = "from-amber-600 via-yellow-500 to-emerald-400";
-                    if (index >= 5) { colorsLight = "from-emerald-500 via-teal-500 to-cyan-500"; colorsDark = "from-cyan-600 via-blue-500 to-purple-400"; }
-                    if (index >= 10) { colorsLight = "from-violet-500 via-purple-500 to-fuchsia-500"; colorsDark = "from-rose-600 via-pink-500 to-purple-400"; }
-                    if (index >= 15) { colorsLight = "from-rose-500 via-pink-500 to-orange-500"; colorsDark = "from-emerald-600 via-lime-400 to-cyan-400"; }
+                    if (index >= 10) { colorsLight = "from-emerald-500 via-teal-500 to-cyan-500"; colorsDark = "from-cyan-600 via-blue-500 to-purple-400"; }
+                    if (index >= 20) { colorsLight = "from-violet-500 via-purple-500 to-fuchsia-500"; colorsDark = "from-indigo-600 via-purple-500 to-pink-500"; }
+                    if (index >= 30) { colorsLight = "from-rose-500 via-pink-500 to-orange-500"; colorsDark = "from-rose-600 via-pink-500 to-orange-400"; }
+                    if (index >= 40) { colorsLight = "from-amber-500 via-orange-500 to-rose-500"; colorsDark = "from-red-600 via-orange-500 to-yellow-400"; }
+                    if (index >= 50) { colorsLight = "from-fuchsia-500 via-pink-500 to-rose-500"; colorsDark = "from-emerald-600 via-lime-400 to-cyan-400"; }
                     return {
                         ...data,
                         name: "PROJECT_LVL_" + data.level,
@@ -349,7 +399,7 @@
                     if (year < '2024') {
                         const total = Number(item.總資產) || 0;
                         let lvl = compoundTargets.findIndex(t => total < t.target);
-                        currentTier = lvl === -1 ? 20 : lvl + 1;
+                        currentTier = lvl === -1 ? 60 : lvl + 1;
                     } else break;
                 }
                 return data.map((item, index) => {
@@ -358,7 +408,7 @@
                     const total = Number(newItem.總資產) || 0;
                     
                     let lvlIdx = compoundTargets.findIndex(t => total < t.target);
-                    let tier = lvlIdx === -1 ? 20 : lvlIdx + 1; 
+                    let tier = lvlIdx === -1 ? 60 : lvlIdx + 1; 
 
                     if (year >= '2024') {
                         if (tier > currentTier) { newItem.milestone = 'up'; newItem.tier = tier; currentTier = tier; } 
@@ -714,7 +764,7 @@
                 } 
             }, [loading, totalAssets, progressPercent, currentTierIndex]);
 
-            if (loading && data.length === 0) return ( <div className="flex h-screen items-center justify-center font-mono text-4xl text-slate-800 dark:text-amber-500 tracking-widest font-bold"><ScrambleText text="INITIALIZING_AMBER_ CORE..." /></div> );
+            if (loading && data.length === 0) return ( <div className="flex h-screen items-center justify-center font-mono text-4xl text-slate-800 dark:text-amber-500 tracking-widest font-bold"><ScrambleText text="INITIALIZING_AMBER_ MATRIX..." /></div> );
 
             const twVal = Number(latestForStats.台股) || 0;
             const usVal = Number(latestForStats.美股) || 0;
@@ -742,16 +792,16 @@
                         </div>
                     )}
 
-                    {/* [DESTINY MATRIX MODAL] */}
+                    {/* [DESTINY MATRIX MODAL - 60 LEVELS] */}
                     {showDestinyModal && (
                         <div className="fixed inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100]" onClick={() => setShowDestinyModal(false)}>
                             <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-amber-500/30 modal-scroll" onClick={e => e.stopPropagation()}>
                                 <div className="flex justify-between items-center mb-6 border-b border-slate-100 dark:border-amber-500/20 pb-4 sticky top-0 bg-white dark:bg-slate-900 z-10">
-                                    <h2 className="text-2xl font-black font-mono text-slate-800 dark:text-amber-500">DESTINY MATRIX</h2>
+                                    <h2 className="text-2xl font-black font-mono text-slate-800 dark:text-amber-500">DESTINY MATRIX (60 LEVELS)</h2>
                                     <button onClick={() => setShowDestinyModal(false)} className="text-slate-400 dark:text-amber-500/50 hover:text-slate-600 dark:hover:text-amber-400 font-bold text-3xl outline-none transition-colors">&times;</button>
                                 </div>
                                 <div className="space-y-2">
-                                    {compoundTargets.map((t, i) => {
+                                    {tierConfigs.map((t, i) => {
                                         const isCurrent = activeTier.level === t.level;
                                         const isPassed = totalAssets >= t.target;
                                         return (
@@ -1079,7 +1129,7 @@
                                 
                                 const getTier = (total) => {
                                     let idx = compoundTargets.findIndex(t => total < t.target);
-                                    return idx === -1 ? 20 : idx + 1;
+                                    return idx === -1 ? 60 : idx + 1;
                                 };
 
                                 const startTier = getTier(Number(startRecord?.總資產) || 0);
