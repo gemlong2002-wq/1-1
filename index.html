@@ -319,6 +319,41 @@
             { level: 60, target: 212372960, age: 98, year: 2083 }
         ];
 
+        // Helper function to render individual asset cell with Sub-Badge YTD
+        const renderAssetCell = (currentVal, baseVal, isBase) => {
+            const valStr = Number(currentVal).toLocaleString();
+            if (isBase) {
+                return (
+                    <div className="flex flex-col">
+                        <span className="text-2xl font-mono text-slate-500 dark:text-amber-200/70">{valStr}</span>
+                        <span className="text-xs font-mono text-slate-400/50 dark:text-amber-700/50 mt-1">BASE</span>
+                    </div>
+                );
+            }
+            let ytdNode = null;
+            if (baseVal === 0) {
+                if (currentVal > 0) {
+                    ytdNode = <span className="text-emerald-500 dark:text-emerald-400">✨ NEW</span>;
+                } else {
+                    ytdNode = <span className="text-slate-400 dark:text-amber-700/50">0.00%</span>;
+                }
+            } else {
+                const diff = currentVal - baseVal;
+                const pct = (diff / baseVal) * 100;
+                if (diff >= 0) {
+                    ytdNode = <span className="text-emerald-600 dark:text-emerald-400">▲ +{pct.toFixed(2)}%</span>;
+                } else {
+                    ytdNode = <span className="text-rose-600 dark:text-rose-400">▼ {pct.toFixed(2)}%</span>;
+                }
+            }
+            return (
+                <div className="flex flex-col">
+                    <span className="text-2xl font-mono text-slate-500 dark:text-amber-200/70">{valStr}</span>
+                    <span className="text-sm font-mono font-bold mt-1">{ytdNode}</span>
+                </div>
+            );
+        };
+
         const Dashboard = () => {
             // [THEME ENGINE]
             const [theme, setTheme] = useState(localStorage.getItem('amber-theme') || 'light');
@@ -1157,12 +1192,25 @@
                                                             const prevAsset = Number(currentYearData[currentYearData.length - 1].總資產) || 1;
                                                             const ytdGrowth = (((currentAsset - prevAsset) / prevAsset) * 100);
                                                             const isBase = item._rowIndex === currentYearData[currentYearData.length - 1]._rowIndex;
+                                                            
+                                                            const baseTW = Number(currentYearData[currentYearData.length - 1].台股) || 0;
+                                                            const baseUS = Number(currentYearData[currentYearData.length - 1].美股) || 0;
+                                                            const baseCR = Number(currentYearData[currentYearData.length - 1].加密貨幣) || 0;
+
                                                             return (
                                                                 <tr key={item._rowIndex} className={"table-row-vibe border-b border-slate-100 dark:border-amber-500/10 " + (isEditing ? "bg-slate-100 dark:bg-amber-900/30" : "")}>
                                                                     {isEditing ? (
                                                                         <React.Fragment><td className="p-4"><input name="date" value={editFormData.date} onChange={handleEditChange} className="w-40 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="twStock" value={editFormData.twStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="usStock" value={editFormData.usStock} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4"><input type="number" name="crypto" value={editFormData.crypto} onChange={handleEditChange} className="w-40 md:w-48 px-4 py-3 text-xl rounded font-mono font-bold border-slate-300" /></td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 text-xl text-slate-400 font-mono font-bold">--</td><td className="p-4 space-x-4"><button onClick={() => saveEdit(item._rowIndex)} className="text-xl px-4 py-2 bg-slate-800 text-white rounded font-mono font-bold hover:bg-slate-700 transition-colors shadow">SAVE</button><button onClick={() => setEditingRow(null)} className="text-xl px-4 py-2 border-2 border-slate-300 text-slate-600 rounded font-mono font-bold hover:bg-slate-100 transition-colors">CANCEL</button></td></React.Fragment>
                                                                     ) : (
-                                                                        <React.Fragment><td className="p-6 text-2xl font-mono text-slate-800 dark:text-amber-600 font-bold">{formatYMD(item.日期)}</td><td className="p-6 text-2xl font-mono text-slate-500 dark:text-amber-200/70">{Number(item.台股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500 dark:text-amber-400/70">{Number(item.美股).toLocaleString()}</td><td className="p-6 text-2xl font-mono text-slate-500 dark:text-amber-600/70">{Number(item.加密貨幣).toLocaleString()}</td><td className="p-6 text-2xl font-extrabold font-mono">{isBase ? <span className="text-slate-400 dark:text-amber-700/50">BASE</span> : <span className={ytdGrowth >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>{ytdGrowth >= 0 ? '▲ +' : '▼ '}{ytdGrowth.toFixed(2)}%</span>}</td><td className="p-6 text-3xl font-extrabold font-mono relative"><div className="flex items-center gap-5"><span className="text-slate-800 dark:text-amber-200">{Number(item.總資產).toLocaleString()}</span>{item.milestone === 'up' && <span className="text-lg px-3 py-1 rounded cyber-tag-up font-bold animate-pulse">▲ LVL {item.tier} UNLOCKED</span>}{item.milestone === 'down' && <span className="text-lg px-3 py-1 rounded cyber-tag-down font-bold animate-pulse">▼ LVL {item.prevTier} LOST</span>}</div></td><td className="p-6 space-x-6 relative z-10"><button onClick={() => startEdit(item)} className="text-xl text-cyan-600 dark:text-amber-400 font-mono font-extrabold hover:text-cyan-800 dark:hover:text-amber-300 transition-colors hover:scale-110 inline-block">EDIT</button><button onClick={() => handleDelete(item._rowIndex)} className="text-xl text-rose-500 dark:text-rose-400 font-mono font-extrabold hover:text-rose-700 dark:hover:text-rose-300 transition-colors hover:scale-110 inline-block">DEL</button></td></React.Fragment>
+                                                                        <React.Fragment>
+                                                                            <td className="p-6 text-2xl font-mono text-slate-800 dark:text-amber-600 font-bold">{formatYMD(item.日期)}</td>
+                                                                            <td className="p-6">{renderAssetCell(item.台股, baseTW, isBase)}</td>
+                                                                            <td className="p-6">{renderAssetCell(item.美股, baseUS, isBase)}</td>
+                                                                            <td className="p-6">{renderAssetCell(item.加密貨幣, baseCR, isBase)}</td>
+                                                                            <td className="p-6 text-2xl font-extrabold font-mono">{isBase ? <span className="text-slate-400 dark:text-amber-700/50">BASE</span> : <span className={ytdGrowth >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>{ytdGrowth >= 0 ? '▲ +' : '▼ '}{ytdGrowth.toFixed(2)}%</span>}</td>
+                                                                            <td className="p-6 text-3xl font-extrabold font-mono relative"><div className="flex items-center gap-5"><span className="text-slate-800 dark:text-amber-200">{Number(item.總資產).toLocaleString()}</span>{item.milestone === 'up' && <span className="text-lg px-3 py-1 rounded cyber-tag-up font-bold animate-pulse">▲ LVL {item.tier} UNLOCKED</span>}{item.milestone === 'down' && <span className="text-lg px-3 py-1 rounded cyber-tag-down font-bold animate-pulse">▼ LVL {item.prevTier} LOST</span>}</div></td>
+                                                                            <td className="p-6 space-x-6 relative z-10"><button onClick={() => startEdit(item)} className="text-xl text-cyan-600 dark:text-amber-400 font-mono font-extrabold hover:text-cyan-800 dark:hover:text-amber-300 transition-colors hover:scale-110 inline-block">EDIT</button><button onClick={() => handleDelete(item._rowIndex)} className="text-xl text-rose-500 dark:text-rose-400 font-mono font-extrabold hover:text-rose-700 dark:hover:text-rose-300 transition-colors hover:scale-110 inline-block">DEL</button></td>
+                                                                        </React.Fragment>
                                                                     )}
                                                                 </tr>
                                                             );
