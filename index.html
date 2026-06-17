@@ -20,16 +20,13 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; min-height: 100vh; margin: 0; overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
         html.dark body { background-color: #020617; color: #f59e0b; }
         
-        /* Grid */
         .cyber-grid { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px); background-size: 40px 40px; z-index: -1; pointer-events: none; transition: all 0.4s ease; }
         html.dark .cyber-grid { background-image: linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px); }
         .cyber-grid::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.2) 0%, #f8fafc 80%); transition: all 0.4s ease; }
         html.dark .cyber-grid::after { background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.8) 0%, #020617 70%); }
         
-        /* Glass Card */
         .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(15, 23, 42, 0.1); box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         html.dark .glass-card { background: rgba(15, 23, 42, 0.6); border-color: rgba(245, 158, 11, 0.15); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8); }
-        
         .glass-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.25), 0 0 20px rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.4); z-index: 10; }
         html.dark .glass-card:hover { box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.5); }
         
@@ -40,7 +37,6 @@
         html.dark .holo-card::before { background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(245, 158, 11, 0.08), transparent 40%); }
         .holo-card:hover::before { opacity: 1; }
         
-        /* Dynamic Text */
         .vibe-hover-text { display: inline-block; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .vibe-hover-text:hover { transform: scale(1.05) translateY(-3px); text-shadow: 0 10px 20px rgba(14, 165, 233, 0.4), 0 0 10px rgba(14, 165, 233, 0.2); color: #0ea5e9; cursor: crosshair; }
         html.dark .vibe-hover-text:hover { text-shadow: 0 10px 20px rgba(245, 158, 11, 0.5), 0 0 10px rgba(245, 158, 11, 0.3); color: #fbbf24; }
@@ -49,13 +45,11 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         
-        /* Premium Text */
         .glass-text-premium { background: linear-gradient(180deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 4px 6px rgba(15, 23, 42, 0.1)); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; }
         html.dark .glass-text-premium { background: linear-gradient(180deg, #fbbf24 0%, rgba(245, 158, 11, 0.6) 100%); -webkit-background-clip: text; filter: drop-shadow(0px 4px 12px rgba(245, 158, 11, 0.25)); }
         .glass-text-premium:hover { filter: drop-shadow(0 15px 20px rgba(14, 165, 233, 0.4)) drop-shadow(0 0 10px rgba(14,165,233,0.2)); transform: scale(1.08) translateY(-4px); background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         html.dark .glass-text-premium:hover { filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5)) drop-shadow(2px 2px 0px rgba(245, 158, 11, 0.8)); background: linear-gradient(180deg, #fcd34d 0%, #f59e0b 100%); -webkit-background-clip: text; }
         
-        /* Odometer */
         .odometer-digit-container { display: inline-block; position: relative; width: 36px; height: 54px; flex-shrink: 0; background: #ffffff; border: 2px solid rgba(15, 23, 42, 0.1); border-radius: 8px; margin: 0 4px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.3s; }
         html.dark .odometer-digit-container { background: #0f172a; border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.6); }
         .odometer-digit-container:hover { border-color: rgba(14, 165, 233, 0.5); box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); transform: translateY(-2px); }
@@ -319,8 +313,8 @@
             { level: 60, target: 212372960, age: 98, year: 2083 }
         ];
 
-        // Helper function to render individual asset cell with Sub-Badge YTD
-        const renderAssetCell = (currentVal, baseVal, isBase) => {
+        // [UPGRADED: SAFE YTD COMPONENT]
+        const YtdAssetCell = ({ currentVal, baseVal, isBase }) => {
             const valStr = Number(currentVal).toLocaleString();
             if (isBase) {
                 return (
@@ -330,32 +324,29 @@
                     </div>
                 );
             }
-            let ytdNode = null;
             if (baseVal === 0) {
-                if (currentVal > 0) {
-                    ytdNode = <span className="text-emerald-500 dark:text-emerald-400">✨ NEW</span>;
-                } else {
-                    ytdNode = <span className="text-slate-400 dark:text-amber-700/50">0.00%</span>;
-                }
-            } else {
-                const diff = currentVal - baseVal;
-                const pct = (diff / baseVal) * 100;
-                if (diff >= 0) {
-                    ytdNode = <span className="text-emerald-600 dark:text-emerald-400">▲ +{pct.toFixed(2)}%</span>;
-                } else {
-                    ytdNode = <span className="text-rose-600 dark:text-rose-400">▼ {pct.toFixed(2)}%</span>;
-                }
+                return (
+                    <div className="flex flex-col">
+                        <span className="text-2xl font-mono text-slate-500 dark:text-amber-200/70">{valStr}</span>
+                        <span className={"text-sm font-mono font-bold mt-1 " + (currentVal > 0 ? "text-emerald-500 dark:text-emerald-400" : "text-slate-400 dark:text-amber-700/50")}>
+                            {currentVal > 0 ? "✨ NEW" : "0.00%"}
+                        </span>
+                    </div>
+                );
             }
+            const diff = currentVal - baseVal;
+            const pct = (diff / baseVal) * 100;
             return (
                 <div className="flex flex-col">
                     <span className="text-2xl font-mono text-slate-500 dark:text-amber-200/70">{valStr}</span>
-                    <span className="text-sm font-mono font-bold mt-1">{ytdNode}</span>
+                    <span className={"text-sm font-mono font-bold mt-1 " + (diff >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400")}>
+                        {diff >= 0 ? "▲ +" + pct.toFixed(2) + "%" : "▼ " + pct.toFixed(2) + "%"}
+                    </span>
                 </div>
             );
         };
 
         const Dashboard = () => {
-            // [THEME ENGINE]
             const [theme, setTheme] = useState(localStorage.getItem('amber-theme') || 'light');
             
             useEffect(() => {
@@ -367,7 +358,6 @@
                 localStorage.setItem('amber-theme', theme);
             }, [theme]);
 
-            // [60-STAGE COLOR MAPPING ENGINE]
             const tierConfigs = useMemo(() => {
                 return compoundTargets.map((data, index) => {
                     let colorsLight = "from-cyan-500 via-blue-500 to-indigo-500";
@@ -714,7 +704,7 @@
             const timeShiftBaseAsset = targetRecords.length > 0 ? (Number(targetRecords[0].總資產) || 1) : 1;
             const timeShiftLatestAsset = targetRecords.length > 0 ? (Number(targetRecords[targetRecords.length - 1].總資產) || 0) : 0;
             const dynamicPlAmt = targetRecords.length > 0 ? (timeShiftLatestAsset - timeShiftBaseAsset) : 0;
-            const dynamicGrowthPct = timeShiftBaseAsset > 0 ? ((timeShiftLatestAsset - timeShiftBaseAsset) / timeShiftBaseAsset) * 100 : 0;
+            const dynamicGrowthPct = targetRecords.length > 0 && timeShiftBaseAsset > 0 ? ((timeShiftLatestAsset - timeShiftBaseAsset) / timeShiftBaseAsset) * 100 : 0;
 
             const { cagr, holdingYears } = useMemo(() => {
                 if (targetRecords.length < 2) return { cagr: 0, holdingYears: 0 };
@@ -1204,9 +1194,9 @@
                                                                     ) : (
                                                                         <React.Fragment>
                                                                             <td className="p-6 text-2xl font-mono text-slate-800 dark:text-amber-600 font-bold">{formatYMD(item.日期)}</td>
-                                                                            <td className="p-6">{renderAssetCell(item.台股, baseTW, isBase)}</td>
-                                                                            <td className="p-6">{renderAssetCell(item.美股, baseUS, isBase)}</td>
-                                                                            <td className="p-6">{renderAssetCell(item.加密貨幣, baseCR, isBase)}</td>
+                                                                            <td className="p-6"><YtdAssetCell currentVal={item.台股} baseVal={baseTW} isBase={isBase} /></td>
+                                                                            <td className="p-6"><YtdAssetCell currentVal={item.美股} baseVal={baseUS} isBase={isBase} /></td>
+                                                                            <td className="p-6"><YtdAssetCell currentVal={item.加密貨幣} baseVal={baseCR} isBase={isBase} /></td>
                                                                             <td className="p-6 text-2xl font-extrabold font-mono">{isBase ? <span className="text-slate-400 dark:text-amber-700/50">BASE</span> : <span className={ytdGrowth >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>{ytdGrowth >= 0 ? '▲ +' : '▼ '}{ytdGrowth.toFixed(2)}%</span>}</td>
                                                                             <td className="p-6 text-3xl font-extrabold font-mono relative"><div className="flex items-center gap-5"><span className="text-slate-800 dark:text-amber-200">{Number(item.總資產).toLocaleString()}</span>{item.milestone === 'up' && <span className="text-lg px-3 py-1 rounded cyber-tag-up font-bold animate-pulse">▲ LVL {item.tier} UNLOCKED</span>}{item.milestone === 'down' && <span className="text-lg px-3 py-1 rounded cyber-tag-down font-bold animate-pulse">▼ LVL {item.prevTier} LOST</span>}</div></td>
                                                                             <td className="p-6 space-x-6 relative z-10"><button onClick={() => startEdit(item)} className="text-xl text-cyan-600 dark:text-amber-400 font-mono font-extrabold hover:text-cyan-800 dark:hover:text-amber-300 transition-colors hover:scale-110 inline-block">EDIT</button><button onClick={() => handleDelete(item._rowIndex)} className="text-xl text-rose-500 dark:text-rose-400 font-mono font-extrabold hover:text-rose-700 dark:hover:text-rose-300 transition-colors hover:scale-110 inline-block">DEL</button></td>
