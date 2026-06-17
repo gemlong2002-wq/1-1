@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -140,7 +139,7 @@
     <div class="cyber-grid"></div>
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script type="text/babel" data-presets="react">
         const { useState, useEffect, useRef, useMemo, Fragment } = React;
 
         const API_GATEWAY = "https://script.google.com/macros/s/AKfycbxKxM7G3Veb0UPbwjvOs3ppGTogpDpi5ytPGVk9HZEDu19Qn-lXbca19dtwRSJxluEZWw/exec"; 
@@ -808,7 +807,7 @@
                         <div className="w-full fire-bg p-1 rounded-2xl mb-8 shadow-2xl animate-pulse mt-12 md:mt-0">
                             <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur rounded-xl p-6 text-center">
                                 <span className="text-3xl md:text-5xl font-black font-mono bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 tracking-[0.2em] drop-shadow-sm">
-                                    <span>FINANCIAL FREEDOM ACHIEVED</span>
+                                    <span>🎉 FINANCIAL FREEDOM ACHIEVED 🎉</span>
                                 </span>
                             </div>
                         </div>
@@ -859,7 +858,7 @@
                                         <span className="text-xl font-mono text-slate-800 dark:text-amber-400 font-bold uppercase tracking-widest relative z-10 transition-colors duration-700 vibe-hover-text">{activeTier.name}</span>
                                         {yearsAhead > 0 && (
                                             <span className="text-xs md:text-sm font-mono tracking-widest font-bold border border-emerald-500/50 dark:border-cyan-500/50 bg-emerald-50 dark:bg-cyan-900/30 text-emerald-600 dark:text-cyan-400 px-2 py-1 rounded shadow-sm animate-pulse">
-                                                🚀 TIME SKIP: +{yearsAhead} YRS
+                                                <span>🚀 TIME SKIP: +</span>{yearsAhead}<span> YRS</span>
                                             </span>
                                         )}
                                     </div>
@@ -1155,7 +1154,7 @@
 
                                 const startTier = getTier(Number(startRecord?.總資產) || 0);
                                 const endTier = getTier(Number(endRecord?.總資產) || 0);
-                                const levelBadgeText = startTier !== endTier ? "LVL " + startTier + " -> LVL " + endTier + " GET!!!" : "LVL " + endTier + " SECURED!!!";
+                                const levelBadgeText = startTier !== endTier ? "LVL " + startTier + " ➔ LVL " + endTier + " GET!!!" : "LVL " + endTier + " SECURED!!!";
 
                                 return (
                                     <div key={year} className="border border-slate-200 dark:border-amber-500/20 rounded-xl overflow-hidden bg-white dark:bg-black/40 min-w-[1000px] shadow-sm">
