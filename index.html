@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amber Terminal | Destiny Matrix</title>
-    
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -12,16 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        Babel.registerPreset("react-classic", {
-            presets: [
-                [Babel.availablePresets["react"], { "runtime": "classic" }]
-            ]
-        });
-        
-        tailwind.config = {
-            darkMode: 'class',
-            theme: { extend: {} }
-        }
+        Babel.registerPreset("react-classic", { presets: [[Babel.availablePresets["react"], { "runtime": "classic" }]] });
+        tailwind.config = { darkMode: 'class', theme: { extend: {} } }
     </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
@@ -149,11 +140,29 @@
     <div id="root"></div>
 
     <script type="text/babel" data-presets="react-classic">
+        /** @jsx React.createElement */
+        /** @jsxFrag React.Fragment */
+        
         const { useState, useEffect, useRef, useMemo, Fragment } = React;
 
-        const API_GATEWAY = "https://script.google.com/macros/s/AKfycbxKxM7G3Veb0UPbwjvOs3ppGTogpDpi5ytPGVk9HZEDu19Qn-lXbca19dtwRSJxluEZWw/exec"; 
+        // [CONFIG] 在這裡填入你的 GAS Web App URL
+        const API_GATEWAY = "https://script.google.com/macros/s/AKfycbyhWin9h3mo13R2-aykplKAych8cCLHX7j7hQUDswr3wk9vc-UK4H8yYJ0s1FI2yRTyVg/exec"; 
 
+        // [CORE ENGINE] 雙節點智能路由：動態偵測 GAS 原生環境 vs GitHub Pages 跨域環境
         const fetchMatrix = async (action, payload = {}) => {
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                // 原生 GAS 環境：0ms 繞過 HTTP，直通後端
+                return new Promise((resolve, reject) => {
+                    google.script.run
+                        .withSuccessHandler((res) => {
+                            try { resolve(JSON.parse(res)); } catch(e) { resolve(res); }
+                        })
+                        .withFailureHandler(reject)
+                        .gasRouter(action, payload);
+                });
+            }
+
+            // GitHub 外部環境：POST 跨域打擊
             const response = await fetch(API_GATEWAY, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -1026,7 +1035,7 @@
                                                 </div>
                                             </div>
                                             <div className="border-t border-violet-200/50 dark:border-cyan-500/30 pt-1 mt-1">
-                                                <span className="text-[10px] font-mono text-slate-400 dark:text-slate-400 font-bold block">FINAL</span>
+                                                <span className="text-[10px] font-mono text-slate-400 dark:text-slate-400 font-bold block">期末結算 (FINAL)</span>
                                                 <span className="text-2xl font-mono font-extrabold text-slate-700 dark:text-cyan-400 block vibe-hover-text">{timeShiftLatestAsset.toLocaleString()} TWD</span>
                                             </div>
                                         </div>
